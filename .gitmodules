@@ -1,0 +1,3 @@
+[submodule "html2jsr286"]
+	path = html2jsr286
+	url = git://github.com/lamikae/html2jsr286.git
