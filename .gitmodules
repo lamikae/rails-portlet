@@ -1,3 +1,9 @@
 [submodule "html2jsr286"]
 	path = html2jsr286
 	url = git://github.com/lamikae/html2jsr286.git
+[submodule "caterpillar"]
+	path = caterpillar
+	url = git://github.com/lamikae/caterpillar.git
+[submodule "lportal"]
+	path = lportal
+	url = git://github.com/lamikae/lportal.git
