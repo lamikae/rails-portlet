@@ -1,0 +1,55 @@
+.caterpillar_navigation {
+background: url('/images/caterpillar/caterpillar.gif') no-repeat;
+padding: 10px 0 0 50px;
+margin-left: 10px;
+min-height: 50px;
+filter:alpha(opacity=81);-moz-opacity:.81;opacity:.81;
+/* css3 tags, works on Firefox and Safari */
+-moz-border-radius: 15px;
+-webkit-border-radius: 15px;
+}
+
+.caterpillar_navigation ul {
+list-style-type: none;
+margin: 4px;
+padding: 4px;
+}
+
+#caterpillar_categories {
+width: 100%;
+overflow: auto;
+}
+
+.cp_category {
+float: left;
+border: 3px double blue;
+margin: 0 14px 5px 14px;
+padding: 5px;
+-moz-border-radius: 12px;
+-webkit-border-radius: 12px;
+background: white;
+}
+
+.cp_portlets {
+float: break;
+overflow: hidden;
+margin: 0 40px 10px 0px;
+border: 3px double green;
+/* padding: 5px; */
+}
+
+.navlink {
+margin: 5px 14px 5px 14px;
+padding: 5px;
+-moz-border-radius: 12px;
+-webkit-border-radius: 12px;
+}
+
+.navlink a {
+text-decoration: none;
+}
+
+.navlink a:hover {
+-moz-border-radius: 8px;
+-webkit-border-radius: 8px;
+}

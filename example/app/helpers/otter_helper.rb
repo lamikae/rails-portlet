@@ -1,0 +1,2 @@
+module OtterHelper
+end

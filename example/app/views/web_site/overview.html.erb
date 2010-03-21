@@ -1,0 +1,133 @@
+<h1>Overview</h1>
+
+
+<p>
+This method is experimental, but the implementation is used in production.
+</p>
+
+
+
+<p>
+It's also possible to use Ajax. Liferay uses the jQuery toolkit, but hides the jQuery namespace so there are no collisions with Rails' default Prototype + script.aculo.us toolkits. There's also <a href="http://ennerchi.com/projects/jrails">jRails</a>, but selecting a particular toolkit is up to the preferences of the developer. See <a href="http://docs.jquery.com/Using_jQuery_with_Other_Libraries">the jQuery docs</a> for more information.
+</p>
+
+
+<h2>How the Rails-portlet works</h2>
+<p>
+This page attempts to describe the process for other developers, but be aware that it may require some customization on your behalf. Liferay is used as the reference platform. 
+</p>
+
+<p>
+The portlet is written in Java, and it makes no distinction whether the Rails app is deployed as a servlet using JRuby, is it running on a mongrel cluster or on any other mechanism. I am currently deploying on the same Tomcat servlet container as Liferay, with the fabulous <a href="http://wiki.jruby.org/wiki/Warbler">Warbler</a> gem. The portlet however makes a standard HTTP request using the Java <a href="http://hc.apache.org/httpclient-3.x/">HttpClient</a> library and can react to GETs, POSTs and redirects.
+</p>
+
+The portlet is configured in portlet.xml (a snippet):
+
+<pre>
+  &lt;filter&gt;
+    &lt;init-param&gt;
+      &lt;name&gt;host&lt;/name&gt;
+      &lt;value&gt;&lt;/value&gt;
+    &lt;/init-param&gt;
+    &lt;init-param&gt;
+      &lt;name&gt;servlet&lt;/name&gt;
+      &lt;value&gt;RailsTestBench&lt;/value&gt;
+    &lt;/init-param&gt;
+    &lt;init-param&gt;
+      &lt;name&gt;route&lt;/name&gt;
+      &lt;value&gt;/&lt;/value&gt;
+    &lt;/init-param&gt;
+  &lt;/filter&gt;
+</pre>
+
+<p>
+This defines the host, servlet and route. When deploying on a servlet container, the servlet is the name of the Rails app. When the host is blank, the host (and port) of the container is used. The route is the path where the HTML is being requested from, according to your <i>config/routes</i>. <a href="index.html#caterpillar">Caterpillar</a> is designed to help with automatic configuration.
+</p>
+
+<p>
+The Rails response is being processed by <a href="http://htmlparser.sourceforge.net/">HTML Parser</a>. Each HTML node is being traversed in the &lt;head&gt; and &lt;body&gt; sections. The title of the page is being set as the portlet title. JavaScripts and CSS links are being included onto the portlet's body HTML. In the body, the links and forms are transformed to PortletUrls and ActionRequests. Image URLs are also modified to take account the servlet.
+</p>
+
+<h2> Where to begin </h2>
+Get the portlet's WAR file and the sample Rails application from <a href="http://rubyforge.org/frs/?group_id=7064">Rubyforge</a>.
+
+<p>
+It is possible to deploy the portlet in a standard manner by copying it into the deploy folder ($HOME/liferay/deploy), as demonstrated below - or by installing it from the administrator GUI. In practice this will not be useful, and for better integration into the host framework the portlet should be activated during the core portal startup. This however is not covered here.
+</p>
+
+</a>
+
+<a name="railstestbench" />
+<h2> Test bench application </h2>
+<div class="image">
+  <img src="images/RailsTestBench.png" alt="RailsTestBench" />
+</div>
+
+<p>
+Get the latest Liferay bundled with Tomcat from <a href="http://sourceforge.net/projects/lportal/">SourceForge</a>. However version 5.1.2 is broken in proper JSR286 support. See <a href="http://issues.liferay.com/browse/LPE-44">LPE-44</a>. This is fixed in 5.2.x releases.
+</p>
+
+<p class="code">
+  cd /usr/local<br />
+  unzip liferay-portal-tomcat-6.0-5.1.1.zip<br />
+  cd liferay-portal-tomcat-6.0-5.1.1<br />
+  bin/startup.sh &amp;&amp; tail -f logs/catalina.out
+</p>
+
+<p>
+See that the startup is ok, and where the auto deploy folder is; you should check the following lines and that there are no errors.
+</p>
+
+<p class="code">
+  ...<br />
+  19:23:40,072 INFO  [AutoDeployDir:76] Auto deploy scanner started for /root/liferay/deploy<br />
+  ...<br />
+  INFO: Server startup in 28706 ms
+</p>
+
+Deploy the test bench application:
+
+<p class="code">
+  cp RailsTestBench.war /usr/local/liferay-portal-tomcat-6.0-5.1.1/webapps/
+</p>
+
+Something along these lines should appear in the log, the last INFO notice is normal.
+
+<p class="code">
+  9.11.2008 19:29:25 org.apache.catalina.startup.HostConfig deployWAR<br />
+  INFO: Deploying web application archive RailsTestBench.war<br />
+  9.11.2008 19:29:26 org.apache.catalina.core.StandardContext addApplicationListener<br />
+  INFO: The listener "org.jruby.rack.rails.RailsServletContextListener" is already configured for this context.
+</p>
+
+Then copy the Rails-portlet to your deploy directory; notice that if you do not start Liferay as root, the user should have full privileges to the file.
+
+<p class="code">
+  cp rails286-portlet-0.5.2.war /root/liferay/deploy/
+</p>
+
+Check for these lines in the log:
+
+<p class="code">
+  22:35:21,201 INFO  [AutoDeployDir:76] Processing rails286-portlet-0.5.2.war<br />
+  ...<br />
+  [Rails286Portlet:94] INFO  Initializing Rails286Portlet 0.5.2<br />
+  22:35:22,418 INFO  [PortletHotDeployListener:284] 1 portlets for rails286-portlet registered successfully
+</p>
+
+<p>
+Open http://localhost:8080 in a browser, and login as 'test@liferay.com' with the password 'test'. Accept the license agreement and click on 'add application' on the JavaScript menu on the upper right corner.
+</p>
+
+<p>
+You should see the 'Internet' category. Open it and add 'Rails-portlet testing application'. This is a Rails test application portlet that demonstrates various functions that the portlet supports.
+</p>
+
+See the README inside the WAR file for contact information.
+
+<p style="font-size: 18px;">
+For developers: the RailsTestBench is in the SVN trunk, see the notes on development.
+</p>
+
+
+

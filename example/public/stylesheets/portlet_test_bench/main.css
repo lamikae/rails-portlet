@@ -1,0 +1,163 @@
+/* main.css */
+
+body {
+background-color: #FFFFCC;
+}
+
+/* testing leading whitespaces */
+  body {
+font: 11px Arial,Helvetica;
+}
+
+/* testing another id with "body" */
+#some_other_body {}
+
+.info {
+padding: 10px; 
+border: 5px double #000000; 
+background: #FFEE31; 
+text-align: center; 
+width: auto; 
+margin: 20%; 
+margin-top: 25px; 
+margin-bottom: 25px;
+font: 17px Times New Roman;
+}
+
+.notice {
+padding: 10px; 
+border: 5px double #000000; 
+background: #FF575A; 
+text-align: center; 
+width: auto; 
+margin: 20%; 
+margin-top: 25px; 
+margin-bottom: 25px;
+font: 14px Times New Roman;
+}
+
+/* used on css test page */
+#simple_content {
+margin: 25px; padding: 10px; border: 1px solid #000000; background: #93FFE4;
+}
+
+/* resource test page */
+.resource_image_box {
+margin: 25px; padding: 10px; border: 3px groove #74FFF6; background: #FFFFFF;
+text-align: center;
+}
+
+.resource_image_description {
+/* width: 49%; */
+/* float: break; */
+margin-left: 0%;
+border-bottom: 1px solid #000000; 
+/* padding-right: 12px; */
+/* margin-top: 20px; */
+
+font: 21px Times New Roman;
+}
+
+.resource_image_tag {
+width: auto;
+margin-top: 5px;
+/* float: break; */
+/* margin-left: 51%; */
+/* border: 1px solid #000000; */
+}
+
+/* HTTP POST */
+#http_post {
+background: white;
+border: 3px dashed #278F19;
+
+margin: 30px;
+margin-top: 0px;
+margin-bottom: 5px;
+padding: 30px;
+padding-top: 0px;
+}
+/* form input label */
+#http_postform span {
+margin-left: 10px;
+margin-right: 5px;
+}
+/* form input paragraph */
+#http_postform p {
+padding: 4px;
+margin: 3px;
+/* border: 1px dotted gray; */
+}
+/* form submit */
+#submit_tags {
+margin-left: 10px;
+margin-right: 5px;
+}
+
+#http_post h1 {
+font: 21px Times New Roman;
+padding: 3px;
+}
+#http_post h2 {
+font: 12px Times New Roman;
+border-bottom: 1px dashed gray;
+padding: 3px;
+}
+#post_msg {
+font: 21px Arial;
+font-style: italic;
+padding-left: 20px;
+}
+#post_info {
+font: 14px Arial;
+font-style: italic;
+padding-left: 20px;
+}
+
+/* login */
+.login_link {
+padding: 20px;
+font: 14px Arial;
+border: 3px solid green;
+background: white;
+/* float: left; */
+width: 20%;
+margin: 4px;
+}
+
+/* Drag & drop test */
+.dragdrop {
+height: 200px;
+border: 3px dotted blue;
+float:left;
+margin: 2%;
+}
+
+.dragdrop_id, #drop_status{
+padding: 20px;
+font: 14px Arial;
+border: 3px solid green;
+background: white;
+width: 20%;
+margin: 4px;
+-moz-border-radius: 0 0 2em 0;
+-webkit-border-radius: 0 0 2em 0;
+}
+
+#draggables {
+width: 25%;
+}
+#droppables {
+width: 65%;
+}
+
+.draggable {
+float: left;
+margin: 40px 0 0 24%;
+cursor: move;
+/* padding-left: 12%; */
+}
+
+#drop_status {
+font: 14px Arial;
+}

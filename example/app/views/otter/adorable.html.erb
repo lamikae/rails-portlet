@@ -1,0 +1,10 @@
+<p>
+<% if @user and @group -%>
+  Hello, <%= @user.firstname -%>. Don't you think these otters look lovely?<br />
+  Do you think other people in <%= @group.name -%> will like them?
+<% else -%>
+	<%#= render :partial => 'common/lportal_disabled' %>
+<% end -%>
+</p>
+
+<%= image_tag 'funny-pictures-baby-otters-are-adorable.jpg' %>

@@ -1,0 +1,19 @@
+If you want Liferay database integration, you need the lportal gem.
+Versions 1.0 and 1.1 do not offer MySQL support, and they only work on PostgreSQL.
+
+If you are working with PostgreSQL database server, or are interested in 
+developing MySQL support, install lportal by
+
+  a) gem install lportal
+
+	and add
+
+		require 'lportal'
+
+	to config/initializers/lportal.rb
+
+
+  b) use the development library from git:
+
+	git clone gitosis@rubyforge.org:lportal.git
+

@@ -1,0 +1,83 @@
+<div class="image">
+  <%= image_tag 'rails-portlet-welcome.png', :alt => "" %>
+</div>
+
+<a name="rails-portlet" />
+<p>
+  <h1>Web application deployment in JSR286 portlets</h1>
+
+Rails-portlet makes any webapp, not just Ruby on Rails, presentable in a standard <a href="http://jcp.org/en/jsr/detail?id=286">JSR286 Java portlet</a>. The tools and configuration though is fine-tuned for Liferay and Rails co-operaation. This deployment model has the advantage of developing custom software in an agile fashion for a J2EE framework, let it be the choice of the development team or a dictated order. Java has had strong support and commercial acceptance and will be with us for a long time.
+</p>
+<p>
+Liferay handles the user management, page layouts ("window management") and other common portal application principles. This workload is off the Rails development team. They can put all their focus on creating unique features that target prototyping the very essence of the application.
+</p>
+
+<p>
+The research was initiated by Cel'Amanzi Ltd, further development funded by Youleaf. The source code is available under MIT open source license.<br />
+ &copy; 2008-2010 Mikael Lammentausta.
+</p>
+
+<h1>Support</h1>
+<p>
+This documentation and the examples are using <a href="http://www.liferay.com">Liferay</a> on Tomcat as the reference platform. JBoss is supported too.
+</p>
+<p>
+If you need assistance or have found a bug, please contact the author.
+</p> 
+
+<a name="caterpillar">
+  <h1>First step</h1>
+<%= image_tag 'caterpillar/caterpillar.gif', :alt => "", :style => "float: left;" -%>
+
+<p>
+The project hosts two files – <em>rails-portlet</em> and <em>caterpillar</em>. If you go with the flow and use Rails, you only need Caterpillar. If you are an experimentalist, go ahead and take <em>rails-portlet</em> and study how to make use of it. Caterpillar is in a Ruby gem and Rails-portlet in a Java JAR.
+</p>
+<p>
+Caterpillar is a helper for Rails applications. <b>Caterpillar contains the Rails-portlet JAR</b>, so it is the only package you'll need to install to build Rails portlets for the portlet container.
+</p>
+
+Main features:
+<ul>
+  <li>dynamic portlet XML creation</li>
+  <li>portlet session security mechanism</li>
+  <li>Rails-portlet JAR install command</li>
+  <li>list of portlets during development</li>
+</ul>
+
+<p>
+Due to changes in Liferay 5.2 API, Rails-portlet is no longer compatible with Liferay 5.1.
+Caterpillar-0.9.5 is the first version to support Liferay-5.2, and installs an older JAR for Liferay 5.1.
+</p>
+
+
+Gem can be installed by
+<p class="code">
+ $ sudo gem install caterpillar
+</p>
+
+<a href="/doc/caterpillar">Documentation</a> is available online.<br />
+SVN is browsable at <a href="http://rails-portlet.rubyforge.org/svn/trunk/caterpillar/">Rubyforge</a>. The checkout URL is <span class="code">svn://rubyforge.org/var/svn/rails-portlet/trunk/caterpillar</span>
+
+<p>
+For runtime description of Caterpillar capabilities: 
+<p class="code">
+ $ caterpillar --describe
+</p>
+</p>
+
+
+<p id="footer">
+Please send your questions and bug reports to the <%= link_to 'rails-portlet-bugs mailing list', 'http://rubyforge.org/mailman/listinfo/rails-portlet-bugs' -%>.
+</p>
+
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-6728200-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
