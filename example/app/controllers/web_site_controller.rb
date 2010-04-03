@@ -7,30 +7,21 @@ class WebSiteController < ApplicationController
 
   def get_navigation
     @navigation=[
-      { :label => 'Main page',
-        :url   => 'index.html'
+      { :label => 'intro',
+        :url   => '/index.html'
       },
-      { :label => 'Guide',
-        :url   => 'guide.html'
+      { :label => 'features',
+        :url   => doc_url(:action => 'features')
       },
-      { :label => 'ChangeLog',
-        :url   => 'http://rails-portlet.rubyforge.org/svn/trunk/Changelog.txt'
+      { :label => 'setup guide',
+        :url   => doc_url(:action => 'defaultsetup')
       },
-      { :label => 'Example',
-        :url   => 'example.html'
+      { :label => 'portlet development guide',
+        :url   => doc_url(:action => 'development')
       },
-      { :label => 'Development',
-        :url   => 'development.html'
+      { :label => 'source',
+        :url   => 'http://github.com/lamikae/rails-portlet'
       },
-#       { :label => 'Deployment',
-#         :url   => 'deployment.html'
-#       },
-      { :label => 'Technical overview',
-        :url   => 'overview.html'
-      },
-      { :label => 'Download',
-        :url   => 'http://rubyforge.org/frs/?group_id=7064'
-      }
     ]
   end
 
