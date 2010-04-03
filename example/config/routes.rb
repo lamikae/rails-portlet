@@ -53,7 +53,9 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':action.:format', :controller => 'WebSite'
 
   map.root :controller => 'WebSite', :action => 'index', :format => 'html'
-
+  map.doc(
+    '/doc/:action.html',
+    { :controller => 'WebSite' })
 
   # Install the default routes as the lowest priority.
   # Note: These default routes make all actions in every controller accessible via GET requests. You should

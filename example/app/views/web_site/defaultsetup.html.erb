@@ -1,0 +1,121 @@
+<h1>Setup for running Rails portlets in Liferay environment</h1>
+
+<p>
+You will need:
+<ul>
+  <li>Functional development enviroment; this guide expects you to work in *nix OS</li>
+  <li>Ruby, Rubygems, Rails 2.x</li>
+  <li>Liferay 5.1.1 or 5.2.x on Tomcat installed in <span class="file">/usr/local/liferay</span> (5.1.2 does NOT work, see <a href="http://issues.liferay.com/browse/LPE-44">LPE-44</a>)</li>
+  <li>Git</li>
+</ul>
+
+Since there can be many various setups, the following packages are optional:
+<ul>
+  <li>JRuby</li>
+  <li>PostgreSQL</li>
+</ul>
+
+</p>
+
+<p>
+Install the Caterpillar gem, clone the example application from the master branch and start the server.
+
+<p class="code">
+ $ gem install caterpillar --no-ri --no-rdoc<br />
+ $ git clone git@github.com:lamikae/rails-portlet.git<br />
+ $ cd rails-portlet/example<br />
+ $ ./script/server 
+</p>
+
+Check that it is running by navigating to <a href="http://localhost:3000/doc/defaultsetup.html">http://localhost:3000/doc/defaultsetup.html</a>, where you should see this document.
+</p>
+
+<p>
+If Liferay is running, stop it now.
+
+Check the configuration file <span class="file">config/portlets.rb</span> that the settings match your environment.<br />
+Install the required JAR:
+
+<p class="code">
+ $ sudo caterpillar jar:install
+</p>
+
+The example application hosts the portlet test bench. Install the XML for this portlet:
+<p class="code">
+ $ sudo caterpillar xml deploy
+</p>
+
+</p>
+
+<p>
+Then you're ready to boot up Liferay.
+<p class="code">
+  $ cd /usr/local/liferay<br />
+  $ su - tomcat bin/startup.sh ; sleep 4; tail -f logs/catalina.out
+</p>
+
+In case you don't have the 'tomcat' user, replace 'su - tomcat' with 'sudo'.<br />
+You should see lines like this in the output:
+
+<p class="code">
+Starting Liferay Portal 5.1.1 (Calvin / Build 5101 / August 11, 2008)<br />
+14:48:07,186 INFO  [Rails286Portlet:94] Initializing Rails286Portlet 0.5.2<br />
+14:48:07,213 INFO  [Rails286Portlet:94] Initializing Rails286Portlet 0.5.2<br />
+...<br />
+INFO: Server startup in 45329 ms
+</p>
+
+</p>
+
+<!--
+Run the migrations;
+<p class="code">
+ $ caterpillar db:migrate
+</p>
+
+<p class="code">
+  # install Warbler<br />
+ $ sudo /usr/local/jruby/bin/jruby /usr/local/jruby/bin/gem install warbler<br /><br />
+</p>
+
+Install the Warbler configuration file and define the gems:
+<p class="code">
+ $ warble config
+</p>
+
+<p class="code">
+ <span class="file">File: config/warble.rb</span><br /><br />
+  config.gems &lt;&lt; "activerecord-jdbcpostgresql-adapter"<br />
+  config.gems &lt;&lt; "lportal"
+</p>
+
+Caterpillar has deployment tasks. They generate the XML files, build the WAR package and copy them to the portlet container. Only Liferay on Tomcat is supported.
+
+<p class="code">
+ $ sudo caterpillar deploy
+</p>
+
+Install the Rails-portlet:
+
+<p class="code">
+ $ sudo caterpillar jar:install<br />
+</p>
+
+<%#= image_tag 'example portlet menu.png', :alt => 'Example menu', :style => "float: right;" %>
+
+-->
+<p>
+Then you're ready to browse to <a href="http://localhost:8080/">http://localhost:8080/</a>. Login and click on 'add application' on the JavaScript menu on the upper right corner. You should see the 'example' category. Open it and add the test bench.
+</p>
+
+<!--
+<div style="float: none; margin-left: 5%;">
+<%= link_to(
+      image_tag('example portlets_small.png', :alt => 'Example portlets in Liferay'),
+      '/images/example portlets.png') %>
+<br />
+  Click on the image to see a full-sized version.
+</div>
+-->
+
+
