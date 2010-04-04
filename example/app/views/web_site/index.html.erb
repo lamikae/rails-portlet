@@ -5,31 +5,27 @@
 <a name="rails-portlet" />
   <h1>Web application development for JSR286 portlets</h1>
 <p>
-Rails-portlet runs a webapp, such as Ruby on Rails, in a standard <a href="http://jcp.org/en/jsr/detail?id=286">JSR286 Java portlet</a>. The tools and default configuration have been developed in  <a href="http://www.liferay.com">Liferay</a> &amp; Rails + PostgreSQL, Oracle. This makes agile portlet development in a J2EE framework easier to manage.
+Rails-portlet runs a webapp, such as Ruby on Rails, in a standard <a href="http://jcp.org/en/jsr/detail?id=286">JSR286 Java portlet</a>. The tools and default configuration have been developed in  <a href="http://www.liferay.com">Liferay</a> &amp; Rails + PostgreSQL. This makes agile portlet development in a J2EE framework easier to manage.
 </p>
 <p>
 Liferay handles the user management, page layouts ("window management") and other common portal application principles. This workload is off the development team.
 </p>
-<p>
-It all started when I needed to develop a webapp for Liferay, and I wanted to do it with Rails. If you're looking for a project that provides webapp-portlets in Rails, look for rails-marionet.
-</p>
 
-<!--
+<h1>What about Web Proxy Portlet or portletbridge?</h1>
 <p>
-The research was initiated by Cel'Amanzi Ltd, further development funded by Youleaf. The source code is available under MIT open source license.<br />
- &copy; 2008-2010 Mikael Lammentausta.
+Wait for the upcoming blog post.
 </p>
--->
 
 <h1>What environment does this run in?</h1>
 <p>
-Tomcat 6, and on a JBoss/Tomcat bundle with Liferay 5.x.
+Liferay 5.x, tested on Tomcat. Rails 2 has been used on a number of projects, deployed on both JRuby servlet and MRI Mongrel dispatchers.<br />
+Regarding application development for the Liferay platform and database integration, the v5 schema modeling is working only on PostgreSQL.
 </p>
 
 <h1>So how do I get started?</h1>
-
 <p>
-The project hosts three components – <em>html2jsr286</em>, <em>caterpillar</em> and <em>lportal</em>. You only need Caterpillar unless you are an experimentalist. Caterpillar is a helper for Rails applications. <b>Caterpillar contains the Rails-portlet JAR</b>, so it is the only package you'll need to install to build Rails portlets for the portlet container. If you want to run on Liferay,
+The aim of this project is to get development quickly on track, with as much automation as possible.
+If you want to build a Rails app and run it on Liferay in portlets,
 </p>
 
 <div>

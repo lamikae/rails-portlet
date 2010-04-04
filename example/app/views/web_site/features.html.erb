@@ -2,11 +2,7 @@
 
 <h1>Features</h1>
 <p>
-It is possible to build portlet applications using either MRI Ruby or JRuby with standard Rails package and development practices. 
-</p>
-<p>
-The Java portlet is configured with an url and cookies to send a HTTP request to a remote server.
-The HTTP response is being processed by <a href="http://htmlparser.sourceforge.net/">HTML Parser</a>. Each HTML node is being traversed in the &lt;head&gt; and &lt;body&gt; sections. The title of the page is being set as the portlet title. JavaScripts and CSS links are being included onto the portlet's body HTML. In the body, the links and forms are transformed to PortletUrls and ActionRequests.
+The project hosts three submodules – <a href="http://github.com/lamikae/html2jsr286">html2jsr286</a>, <a href="http://github.com/lamikae/caterpillar">caterpillar</a> and <a href="http://github.com/lamikae/lportal">lportal</a>. <b>Caterpillar contains the portlet JAR</b>, so you only need the Caterpillar gem unless you are an experimentalist. It contains a set of rake tasks and helper libraries for Rails applications serving Liferay portlets. It is the only package you'll need to install to build Rails portlets for the portlet container. 
 </p>
 
 <h2>Session management and security</h2>
@@ -41,6 +37,10 @@ After inserting this to your ApplicationController, you will have Liferay UID in
 Database integration is optional, for which you need the <em><a href="http://lportal.rubyforge.org/">lportal</a></em> gem, but so far it only works properly with PostgreSQL.
 </p>
 
-
-
+<!-- ask the author
+<h2>EJB integration</h2>
+<p>
+Provided by ActiveEJB.
+</p>
+-->
 
