@@ -16,9 +16,9 @@ class WebSiteController < ApplicationController
       { :label => 'setup guide',
         :url   => doc_url(:action => 'defaultsetup')
       },
-      { :label => 'portlet development guide',
-        :url   => doc_url(:action => 'development')
-      },
+      #{ :label => 'portlet development guide',
+      #  :url   => doc_url(:action => 'development')
+      #},
       { :label => 'source',
         :url   => 'http://github.com/lamikae/rails-portlet'
       },
