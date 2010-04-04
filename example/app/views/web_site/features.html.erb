@@ -10,11 +10,11 @@ The project hosts three submodules – <a href="http://github.com/lamikae/html2j
 User ID is passed from RenderRequest's REMOTE_USER to the remote server in a cookie. The remote application is authenticated transparently. Also any cookies set by the remote server are automatically added to succeeding requests, so it is possible to use Rails' <em>session[]</em> feature.
 </p>
 <p>
-Liferay can also detect the context the portlet is deployed in. The group ID can be passed to the remote server in requst parameters. If you let Caterpillar handle this, @uid will automagically be set in Rails controller actions.
+Liferay can also detect the context the portlet is deployed in. The group ID can be passed to the remote server in requst parameters.
 </p>
 
 <p>
-The mechanism to prevent request spoofing with a forged UID is based on a shared secret, that is given to the portlet at instantiation, inserted into a <em>special cookie</em>, and the value checked at the remote erver. Caterpillar provides handy helpers:
+The mechanism to prevent request spoofing with a forged UID is based on a shared secret, that is given to the portlet at instantiation, inserted into a <em>special cookie</em>, and the value checked at the remote server. Caterpillar provides handy helpers:
 
 <p class="code">
 class ApplicationController<br />
@@ -28,8 +28,7 @@ class ApplicationController<br />
 &nbsp; &nbsp;  before_filter :get_liferay_uid
 </p>
 
-After inserting this to your ApplicationController, you will have Liferay UID in @uid in your every action.
-
+After inserting this to your ApplicationController, you will have Liferay UID in <em><span style="color: green;">@uid</span></em> at use in all actions. <!-- undocumented The <em>authorize</em> filter is documented in Caterpillar::Security. -->
 </p>
 
 <h2>Database integration</h2>
