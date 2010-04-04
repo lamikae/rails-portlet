@@ -1,203 +1,46 @@
-<h1>Example application</h1>
+<%= image_tag 'overview.png', :alt => 'Technical overview', :style => 'float: right; width: 40%; padding: 20px;' -%>
 
-<h2>Prerequisites</h2>
-<ul>
-  <li>Functional development enviroment; this guide expects you to work in *nix OS</li>
-  <li>Ruby, Rubygems and JRuby (1.1.6 or later strongly suggested)</li>
-  <li>Liferay 5.1.1 or 5.2.x on Tomcat (5.1.2 does NOT work, see <a href="http://issues.liferay.com/browse/LPE-44">LPE-44</a>) or later, installed in /usr/local/liferay - using Postgresql database</li>
-  <li>Rails 2.1.2 or later, installed in MRI Ruby for development, and in JRuby for deployment</li>
-  <li>Warbler installed in JRuby</li>
-</ul>
-<!--
-<p class="code">
-  # install Warbler<br />
- $ sudo /usr/local/jruby/bin/jruby /usr/local/jruby/bin/gem install warbler<br /><br />
-</p>
--->
+<h1>Features</h1>
 <p>
-Why Postgresql? <b>Current versions of the <i>lportal</i> library only supports Postgresql, due to differences in the Liferay schema between databases.</b> The differences are in the case of the primary keys and some columns, such as ”userId” &lt;=&gt; ”userid” and ”firstName” &lt;=&gt; ”firstname”.
-A solution has been started.
-
-<!--Any other database will do, but you'll have to alter the example Rails database configuration. -->
+It is possible to build portlet applications using either MRI Ruby or JRuby with standard Rails package and development practices. 
 </p>
 <p>
-Liferay has to be configured to use the correct database. Refer to the Liferay documentation.
+The Java portlet is configured with an url and cookies to send a HTTP request to a remote server.
+The HTTP response is being processed by <a href="http://htmlparser.sourceforge.net/">HTML Parser</a>. Each HTML node is being traversed in the &lt;head&gt; and &lt;body&gt; sections. The title of the page is being set as the portlet title. JavaScripts and CSS links are being included onto the portlet's body HTML. In the body, the links and forms are transformed to PortletUrls and ActionRequests.
 </p>
 
-
-<h2>Let's begin</h2>
-Create a new Rails project and two actions; BearController.hungry and OtterController.adorable.
-
-<p class="code">
- $ rails example<br />
- $ cd example<br />
- $ ./script/generate controller bear hungry<br />
- $ ./script/generate controller otter adorable
-</p>
-
-Caterpillar parses named routes, so define these routes. Notice that the OtterController defines path variables 'uid' and 'gid'. We'll get back to that.
-
-<p class="code">
- <span class="file">File: config/routes.rb</span><br /><br />
-
-  map.hungry_bear(<br />
-  &nbsp;&nbsp;'bear/hungry',<br />
-  &nbsp;&nbsp;{ :controller => 'Bear', &nbsp;:action => 'hungry' })<br /><br />
-  map.adorable_otters(<br />
-  &nbsp;&nbsp;':uid/:gid/otters/adorable',<br />
-  &nbsp;&nbsp;{ :controller => 'Otter', :action => 'adorable' })
-</p>
-
-Test how Caterpillar parses the portlet; the category is named 'example' by the Rails app, the portlets are named 'Hungry bear' and 'Adorable otters'. For more options on portlet configuration, run "caterpillar pluginize" and see config/portlets.rb.
-
-<p class="code">
- $ caterpillar pluginize<br />
- $ caterpillar portlets<br />
-
-example<br />
-&nbsp;&nbsp;&nbsp;&nbsp; Hungry bear &nbsp;&nbsp;&nbsp;&nbsp; "/bear/hungry"<br />
-&nbsp;&nbsp;&nbsp;&nbsp; Adorable otters &nbsp;"/%UID%/%GID%/otters/adorable"
-</p>
-
-
-Define the instance variables @user and @group in OtterController.
-
-<p class="code">
- <span class="file">File: app/controllers/otter_controller.rb</span><br /><br />
-class OtterController &lt; ApplicationController<br />
-&nbsp;&nbsp;def adorable<br />
-&nbsp;&nbsp;&nbsp;&nbsp;@user  = User.find params[:uid]<br />
-&nbsp;&nbsp;&nbsp;&nbsp;@group = Group.find params[:gid]<br />
-&nbsp;&nbsp;end<br />
-end<br />
-</p>
-
-Put some content into the views ;)
-
-<p class="code">
- <span class="file">File: app/views/bear/hungry.html.erb</span><br /><br />
-
-  &lt;%= image_tag 'http://icanhascheezburger.files.wordpress.com/2008/10/funny-pictures-bear-complains-about-bad-service.jpg' %&gt;
-</p>
-
-<p class="code">
- <span class="file">File: app/views/otter/adorable.html.erb</span><br /><br />
-  &lt;p&gt;<br />
-    Hello, &lt;%= @user.firstname -%&gt;. Don't you think these otters look lovely?&lt;br /&gt;<br />
-    Do you think other people in &lt;%= @group.name -%&gt; will like them?<br />
-  &lt;/p&gt;<br /><br />
-
-  &lt;%= image_tag 'http://icanhascheezburger.files.wordpress.com/2008/09/funny-pictures-baby-otters-are-adorable.jpg' %&gt;
-</p>
-
-Configure the database connection. Currently only Postgresql is supported but development to achieve support for MySQL and Oracle are underway. You may use a Rake task:
-
-<p class="code">
-  $ rake mysql<br />
-  $ sudo gem install mysql<br />
-  OR<br />
-  $ rake postgresql<br />
-  $ sudo gem install postgres-pr<br />
-  OR<br />
-  $ sudo gem install activerecord-oracle_enhanced-adapter<br />
-
-</p>
-
-<!--
-Notice that the 'development' enviroment runs on MRI Ruby, and the 'production' enviroment on JRuby, thus you'll need the JDBC adapter.
--->
-
-
-<h2>Deployment</h2>
+<h2>Session management and security</h2>
 <p>
-Everything so far has been very standard Rails app development. Rails can be quite switfly deployed on the same Java servlet container as the Liferay. This example assumes you are using the Tomcat bundle. Nothing really forces you to – you can still use the finely tuned Mongrel/Nginx clusters. Just define the host in config/portlets.rb, after you've "pluginized" Caterpillar. For simple deployment, Caterpillar offers a helpful solution. <b>This is where the magic begins.</b>
+User ID is passed from RenderRequest's REMOTE_USER to the remote server in a cookie. The remote application is authenticated transparently. Also any cookies set by the remote server are automatically added to succeeding requests, so it is possible to use Rails' <em>session[]</em> feature.
 </p>
-
-=== 1)
-Download the unpack the Liferay Tomcat bundle. The default directory is /usr/local/liferay.
-
-=== 2)
-Set up JRuby environment, and add all the gems you need, including Rails.
-If you use gems that use C extensions, check jruby-extras for alternatives. For example, rmagick is replaced by rmagick4j.
-
-===
-Install the Jar
- $ sudo caterpillar jar:install
-
-=== 3) Configure
-File config/portlets.rb:
-  +portlet.container.root+
-
-=== 4) Deploy
-After setting up the example app, you can deploy it on the same Tomcat server where Liferay is running.
-
-  $ sudo -E caterpillar xml deploy
-
-=== 5) Startup
-
-
-Run the migrations;
-<p class="code">
- $ caterpillar db:migrate
+<p>
+Liferay can also detect the context the portlet is deployed in. The group ID can be passed to the remote server in requst parameters. If you let Caterpillar handle this, @uid will automagically be set in Rails controller actions.
 </p>
-
-Install the Warbler configuration file and define the gems:
-<p class="code">
- $ warble config
-</p>
-
-<p class="code">
- <span class="file">File: config/warble.rb</span><br /><br />
-  config.gems &lt;&lt; "activerecord-jdbcpostgresql-adapter"<br />
-  config.gems &lt;&lt; "lportal"
-</p>
-
-Caterpillar has deployment tasks. They generate the XML files, build the WAR package and copy them to the portlet container. Only Liferay on Tomcat is supported.
-
-<p class="code">
- $ sudo caterpillar deploy
-</p>
-
-Install the Rails-portlet:
-
-<p class="code">
- $ sudo caterpillar jar:install<br />
-</p>
-
-Then you're ready to boot the Tomcat servlet container and Liferay.
-<p class="code">
-  $ cd /usr/local/liferay<br />
-  $ su - tomcat bin/startup.sh ; sleep 4; tail -f logs/catalina.out
-</p>
-
-In case you don't have the 'tomcat' user, replace 'su - tomcat' with 'sudo'.<br />
-You should see these lines in the output:
-
-<p class="code">
-Starting Liferay Portal 5.1.1 (Calvin / Build 5101 / August 11, 2008)<br />
-14:48:07,186 INFO  [Rails286Portlet:94] Initializing Rails286Portlet 0.5.2<br />
-14:48:07,213 INFO  [Rails286Portlet:94] Initializing Rails286Portlet 0.5.2<br />
-...<br />
-INFO: Server startup in 45329 ms
-</p>
-
-Now you may switch to watching Rails logs:
-<p class="code">
- $ tail -f logs/localhost.$(date +%Y-%m-%d).log
-</p>
-
-<%= image_tag 'example portlet menu.png', :alt => 'Example menu', :style => "float: right;" %>
 
 <p>
-Then you're ready to browse http://localhost:8080/. Login and click on 'add application' on the JavaScript menu on the upper right corner. You should see the 'example' category. Open it and add both portlets.
-</p>
+The mechanism to prevent request spoofing with a forged UID is based on a shared secret, that is given to the portlet at instantiation, inserted into a <em>special cookie</em>, and the value checked at the remote erver. Caterpillar provides handy helpers:
 
-<div style="float: none; margin-left: 5%;">
-<%= link_to(
-      image_tag('example portlets_small.png', :alt => 'Example portlets in Liferay'),
-      '/images/example portlets.png') %>
+<p class="code">
+class ApplicationController<br />
+&nbsp; &nbsp; # Import security filters<br />
+&nbsp; &nbsp; include Caterpillar::Security<br />
+&nbsp; &nbsp; secure_portlet_sessions<br />
 <br />
-  Click on the image to see a full-sized version.
-</div>
+
+&nbsp; &nbsp;  # get @uid from cookie<br />
+&nbsp; &nbsp;  before_filter :authorize, :only =&gt; :get_liferay_uid<br />
+&nbsp; &nbsp;  before_filter :get_liferay_uid
+</p>
+
+After inserting this to your ApplicationController, you will have Liferay UID in @uid in your every action.
+
+</p>
+
+<h2>Database integration</h2>
+<p>
+Database integration is optional, for which you need the <em><a href="http://lportal.rubyforge.org/">lportal</a></em> gem, but so far it only works properly with PostgreSQL.
+</p>
+
+
 
 

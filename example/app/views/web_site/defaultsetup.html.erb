@@ -18,6 +18,17 @@ Since there can be many various setups, the following packages are optional:
 </p>
 
 <p>
+Install Liferay.
+
+<p class="code">
+  $ cd /usr/local<br />
+  $ unzip liferay-portal-tomcat-6.0-5.2.3.zip<br />
+  $ ln -s liferay-portal-tomcat-6.0-5.2.3 liferay
+</p>
+</p>
+
+
+<p>
 Install the Caterpillar gem, clone the example application from the master branch and start the server.
 
 <p class="code">
@@ -67,55 +78,11 @@ INFO: Server startup in 45329 ms
 
 </p>
 
-<!--
-Run the migrations;
-<p class="code">
- $ caterpillar db:migrate
-</p>
-
-<p class="code">
-  # install Warbler<br />
- $ sudo /usr/local/jruby/bin/jruby /usr/local/jruby/bin/gem install warbler<br /><br />
-</p>
-
-Install the Warbler configuration file and define the gems:
-<p class="code">
- $ warble config
-</p>
-
-<p class="code">
- <span class="file">File: config/warble.rb</span><br /><br />
-  config.gems &lt;&lt; "activerecord-jdbcpostgresql-adapter"<br />
-  config.gems &lt;&lt; "lportal"
-</p>
-
-Caterpillar has deployment tasks. They generate the XML files, build the WAR package and copy them to the portlet container. Only Liferay on Tomcat is supported.
-
-<p class="code">
- $ sudo caterpillar deploy
-</p>
-
-Install the Rails-portlet:
-
-<p class="code">
- $ sudo caterpillar jar:install<br />
-</p>
-
-<%#= image_tag 'example portlet menu.png', :alt => 'Example menu', :style => "float: right;" %>
-
--->
 <p>
 Then you're ready to browse to <a href="http://localhost:8080/">http://localhost:8080/</a>. Login and click on 'add application' on the JavaScript menu on the upper right corner. You should see the 'example' category. Open it and add the test bench.
 </p>
 
-<!--
-<div style="float: none; margin-left: 5%;">
-<%= link_to(
-      image_tag('example portlets_small.png', :alt => 'Example portlets in Liferay'),
-      '/images/example portlets.png') %>
-<br />
-  Click on the image to see a full-sized version.
-</div>
--->
-
+<p>
+  <%= image_tag 'RailsTestBench.png', :style => 'float: none;' %>
+</p>
 

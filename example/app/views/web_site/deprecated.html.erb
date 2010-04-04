@@ -1,0 +1,331 @@
+<h1>Guidelines for Rails portlet development</h1>
+
+
+
+<h2>Liferay</h2>
+The <a href="http://rubyforge.org/projects/lportal/">lportal</a> library models the Liferay database and offers a couple of handy features to manipulate other portlets and layouts. Read the <%= link_to 'documentation', 'http://lportal.rubyforge.org' -%> for tips.
+
+<h2>Production mode</h2>
+There are some minor things that are different for development and production modes. ...
+
+
+<h1>Helpers</h1>
+
+<h2>Portlet navigation in development</h2>
+<%= image_tag 'caterpillar navigation.png', :alt => 'Caterpillar navigation', :style => 'float: right;' -%>
+
+<p>Since portlet development differs a bit from standard Rails practises, and the portlet container handles the navigation and portlet placement (it works like a window manager on the web ;), Caterpillar offers a tool to navigate between various portlets you have. It takes a little bit of manual work to get it running.</p>
+
+
+First, pluginize Caterpillar to your vendor/plugins. This also runs a generator which copies the necessary css, javascript and image files to the public/ folder.
+
+<p class="code">
+ $ caterpillar pluginize
+</p>
+
+Define the navigation filter in ApplicationController:
+
+<p class="code">
+ <span class="file">File: app/controllers/application.rb</span><br /><br />
+
+     if RAILS_ENV=='development'<br />
+&nbsp;&nbsp;       before_filter :caterpillar<br />
+     end<br /><br />
+
+     def caterpillar # :nodoc:<br />
+&nbsp;&nbsp;       @caterpillar_navigation = Caterpillar::Navigation.rails<br />
+&nbsp;&nbsp;       @caterpillar_navigation_defaults = {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;         :uid => 13904,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;         :gid => 13912<br />
+&nbsp;&nbsp;       }<br />
+     end
+</p>
+
+Create a minimal layout:
+
+<p class="code">
+ <span class="file">File: app/views/layouts/bear.html.erb</span><br /><br />
+
+&lt;html&gt;<br />
+&nbsp;&nbsp;  &lt;head&gt;&lt;/head&gt;<br />
+&nbsp;&nbsp;  &lt;body&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;    &lt;% if @caterpillar_navigation -%&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      &lt;%= stylesheet_link_tag 'caterpillar/caterpillar' %&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      &lt;%= javascript_include_tag 'caterpillar/caterpillar' %&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      &lt;%= render :partial =&gt; "caterpillar/navigation" %&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;    &lt;% end -%&gt;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;    &lt;%= yield %&gt;<br />
+&nbsp;&nbsp;&lt;/body&gt;<br />
+&lt;/html&gt;
+</p>
+
+Use this layout in the controllers:
+
+<p class="code">
+ <span class="file">File: app/controllers/bear_controller.rb</span><br /><br />
+
+  class BearController &lt; ApplicationController<br />
+&nbsp;&nbsp;    layout 'bear'<br />
+  end
+</p>
+
+
+If you want to run a development version of <i>lportal</i>, you can do a checkout to lib/lportal, and load it in initializers:
+
+
+<p class="code">
+ <span class="file">File: config/initializers/lportal.rb</span><br /><br />
+	require File.join(RAILS_ROOT,'lib','lportal','init')
+</p>
+
+
+
+
+Finally launch the server and navigate to http://localhost:3000/bear/hungry
+
+<p class="code">
+ $ ./script/server 
+</p>
+
+
+<h2>Preparing the database</h2>
+<p>
+Create the development/production and test databases, and grant privileges for appropriate users. Use the password ”lportal” for this example.
+</p>
+
+With PostgreSQL:
+<p class="code">
+ $ sudo -u postgres createuser -S -D -R -l -i -P -E -e lportal<br />
+    &gt; Enter password 'lportal'<br />
+ $ sudo -u postgres createdb lportal -e -E UNICODE -O lportal<br /><br />
+
+ $ sudo -u postgres createuser -S -d -R -l -i -P -E -e rails_test<br />
+    &gt; Enter password 'rails'<br />
+ $ sudo -u postgres createdb lportal_test -e -E UNICODE -O rails_test
+</p>
+
+With MySQL:
+<p class="code">
+ $ mysql -u root -p<br />
+mysql> CREATE DATABASE lportal;<br />
+mysql> GRANT ALL PRIVILEGES ON lportal.* TO lportal@'localhost' IDENTIFIED BY 'lportal';<br /><br />
+
+mysql> CREATE DATABASE lportal_test;<br />
+mysql> GRANT ALL PRIVILEGES ON lportal_test.* TO rails_test@'localhost' IDENTIFIED BY 'rails';
+</p>
+
+Run custom Caterpillar migrations:
+<p class="code">
+ $ caterpillar db:migrate
+</p>
+
+With Oracle:
+<p class="code">
+ $ sqlplus SYS AS SYSDBA<br/>
+SQL> CREATE USER lportal IDENTIFIED BY lportal;<br/>
+SQL> GRANT create session TO lportal;<br/>
+
+SQL> GRANT connect, create table, resource, dba TO lportal;
+
+Grant succeeded.
+
+
+$ sqlplus / AS SYSDBA @portal-oracle.sql
+</p>
+
+<p>
+Configure Liferay to use this database; refer to <a href="http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/Portal%20Properties%205.2.2#section-Portal+Properties+5.2.2-JDBC">Liferay wiki</a>.
+</p>
+
+
+At this point you may either 
+
+<p style="font-size:18px;">
+A) start Liferay so that it will populate the database, or 
+</p>
+<p class="code">
+Starting Liferay Portal Standard Edition 5.2.1 (Augustine / Build 5201 / February 3, 2009)<br />
+15:07:38,317 WARN  [ReleaseLocalServiceImpl:82] Table 'lportal.Release_' doesn't exist<br />
+15:07:38,318 INFO  [ReleaseLocalServiceImpl:95] Create tables and populate with default data<br />
+</p>
+
+<p style="font-size:18px;">
+B) load some sample data from the <a href="http://www.liferay.com/web/guest/downloads/additional">Liferay Portal 5.2.3 SQL Scripts</a>.
+</p>
+
+<p class="code">
+ $ cd liferay-portal-sql/5.2.3/portal<br />
+ <br />
+ # With MySQL:<br />
+ $ mysql -u root -p --database lportal < portal-mysql.sql<br />
+ <br />
+ # With PostgreSQL:<br />
+ $ sudo -u postgres psql -U lportal < portal-postgresql.sql<br />
+</p>
+
+
+
+
+<h2>Running tests</h2>
+<p>
+You only need to run these tests to make sure your database is supported and is working as expected.
+</p>
+Lportal has a test suite you should include to your tests. Rails test does not accept linking, so copy the suite from an appropriate location (or checkout from SVN/GIT). 
+Run the commands in RAILS_ROOT.
+
+<p class="code">
+ $ cp -r $(pwd)/lib/lportal/test/unit test/unit/lportal
+</p>
+
+Prepare the database and run "caterpillar fixtures" to parse the live data from the RAILS_ENV database to static test fixtures. This will not overwrite your own fixtures, but you should have a copy of hand-written fixtires in your version control, anyway.
+
+<p class="code">
+ $ rake db:schema:dump<br />
+ $ rake db:test:prepare<br />
+ $ caterpillar fixtures
+</p>
+
+Enable a HACK if using PostgreSQL, edit test/test_helper.rb:
+<pre>
+class Test::Unit::TestCase
+  require RAILS_ROOT+'/lib/lportal/active_record/fixtures'
+</pre>
+
+The first time you should be sure you have everything right, run the release test.
+<p class="code">
+ $ cd test && ruby unit/lportal/release_test.rb
+</p>
+
+Run the whole test suite:
+<p class="code">
+ $ rake test:units
+</p>
+
+Caterpillar parses named routes, so define these routes. Notice that the OtterController defines path variables 'uid' and 'gid'. We'll get back to that.
+
+<p class="code">
+ <span class="file">File: config/routes.rb</span><br /><br />
+
+  map.hungry_bear(<br />
+  &nbsp;&nbsp;'bear/hungry',<br />
+  &nbsp;&nbsp;{ :controller => 'Bear', &nbsp;:action => 'hungry' })<br /><br />
+  map.adorable_otters(<br />
+  &nbsp;&nbsp;':uid/:gid/otters/adorable',<br />
+  &nbsp;&nbsp;{ :controller => 'Otter', :action => 'adorable' })
+</p>
+
+Test how Caterpillar parses the portlet; the category is named 'example' by the Rails app, the portlets are named 'Hungry bear' and 'Adorable otters'. For more options on portlet configuration, run "caterpillar pluginize" and see config/portlets.rb.
+
+<p class="code">
+ $ caterpillar pluginize<br />
+ $ caterpillar portlets<br />
+
+example<br />
+&nbsp;&nbsp;&nbsp;&nbsp; Hungry bear &nbsp;&nbsp;&nbsp;&nbsp; "/bear/hungry"<br />
+&nbsp;&nbsp;&nbsp;&nbsp; Adorable otters &nbsp;"/%UID%/%GID%/otters/adorable"
+</p>
+
+
+Define the instance variables @user and @group in OtterController.
+
+<p class="code">
+ <span class="file">File: app/controllers/otter_controller.rb</span><br /><br />
+class OtterController &lt; ApplicationController<br />
+&nbsp;&nbsp;def adorable<br />
+&nbsp;&nbsp;&nbsp;&nbsp;@user  = User.find params[:uid]<br />
+&nbsp;&nbsp;&nbsp;&nbsp;@group = Group.find params[:gid]<br />
+&nbsp;&nbsp;end<br />
+end<br />
+</p>
+
+Put some content into the views ;)
+
+<p class="code">
+ <span class="file">File: app/views/bear/hungry.html.erb</span><br /><br />
+
+  &lt;%= image_tag 'http://icanhascheezburger.files.wordpress.com/2008/10/funny-pictures-bear-complains-about-bad-service.jpg' %&gt;
+</p>
+
+<p class="code">
+ <span class="file">File: app/views/otter/adorable.html.erb</span><br /><br />
+  &lt;p&gt;<br />
+    Hello, &lt;%= @user.firstname -%&gt;. Don't you think these otters look lovely?&lt;br /&gt;<br />
+    Do you think other people in &lt;%= @group.name -%&gt; will like them?<br />
+  &lt;/p&gt;<br /><br />
+
+  &lt;%= image_tag 'http://icanhascheezburger.files.wordpress.com/2008/09/funny-pictures-baby-otters-are-adorable.jpg' %&gt;
+</p>
+
+Configure the database connection. Currently only Postgresql is supported but development to achieve support for MySQL and Oracle are underway. You may use a Rake task:
+
+<p class="code">
+  $ rake mysql<br />
+  $ sudo gem install mysql<br />
+  OR<br />
+  $ rake postgresql<br />
+  $ sudo gem install postgres-pr<br />
+  OR<br />
+  $ sudo gem install activerecord-oracle_enhanced-adapter<br />
+
+</p>
+
+<!--
+Notice that the 'development' enviroment runs on MRI Ruby, and the 'production' enviroment on JRuby, thus you'll need the JDBC adapter.
+-->
+
+
+
+
+
+<!--
+Run the migrations;
+<p class="code">
+ $ caterpillar db:migrate
+</p>
+
+<p class="code">
+  # install Warbler<br />
+ $ sudo /usr/local/jruby/bin/jruby /usr/local/jruby/bin/gem install warbler<br /><br />
+</p>
+
+Install the Warbler configuration file and define the gems:
+<p class="code">
+ $ warble config
+</p>
+
+<p class="code">
+ <span class="file">File: config/warble.rb</span><br /><br />
+  config.gems &lt;&lt; "activerecord-jdbcpostgresql-adapter"<br />
+  config.gems &lt;&lt; "lportal"
+</p>
+
+Caterpillar has deployment tasks. They generate the XML files, build the WAR package and copy them to the portlet container. Only Liferay on Tomcat is supported.
+
+<p class="code">
+ $ sudo caterpillar deploy
+</p>
+
+Install the Rails-portlet:
+
+<p class="code">
+ $ sudo caterpillar jar:install<br />
+</p>
+
+<%#= image_tag 'example portlet menu.png', :alt => 'Example menu', :style => "float: right;" %>
+
+-->
+
+
+
+<!--
+<div style="float: none; margin-left: 5%;">
+<%= link_to(
+      image_tag('example portlets_small.png', :alt => 'Example portlets in Liferay'),
+      '/images/example portlets.png') %>
+<br />
+  Click on the image to see a full-sized version.
+</div>
+-->
+
+
