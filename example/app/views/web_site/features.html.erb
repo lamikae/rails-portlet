@@ -24,7 +24,7 @@ class ApplicationController<br />
 <br />
 
 &nbsp; &nbsp;  # get @uid from cookie<br />
-&nbsp; &nbsp;  before_filter :authorize, :only =&gt; :get_liferay_uid<br />
+&nbsp; &nbsp;  before_filter [:authorize_agent, :authorize_request], :only =&gt; :get_liferay_uid<br />
 &nbsp; &nbsp;  before_filter :get_liferay_uid
 </p>
 
