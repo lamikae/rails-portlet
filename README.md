@@ -12,8 +12,8 @@ Remember to update the submodules after initial clone.
 <code>
  $ git clone git://github.com/lamikae/rails-portlet.git<br />
  $ cd rails-portlet<br />
- $ gh submodule init<br />
- $ gh submodule update
+ $ git submodule init<br />
+ $ git submodule update
 </code>
 
 Further instructions
