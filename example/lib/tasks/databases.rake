@@ -1,4 +1,7 @@
-require 'ftools'
+# encoding: utf-8
+
+#require 'ftools' # does not exist for Ruby 1.9
+require 'fileutils'
 
 desc "Configure PostgreSQL"
 task :postgresql do
