@@ -1,61 +1,63 @@
 <h1>Setup for running Rails portlets in Liferay environment</h1>
 
 <p>
-You will need:
+So far, the minimum setup and versions known to work:
 <ul>
-  <li>Functional development enviroment; this guide expects you to work in *nix OS</li>
-  <li>Ruby, Rubygems, Rails 2.x</li>
-  <li>Liferay 5.1.1 or 5.2.x on Tomcat installed in <span class="file">/usr/local/liferay</span> (5.1.2 does NOT work, see <a href="http://issues.liferay.com/browse/LPE-44">LPE-44</a>)</li>
+  <li>Ruby 1.8.7 or 1.9, Rails 2.x</li>
+  <li>Liferay 5.1.1 or 5.2.x (5.1.2 does NOT work, see <a href="http://issues.liferay.com/browse/LPE-44">LPE-44</a>)</li>
   <li>Git</li>
 </ul>
+And if you want to go with the default configuration, use the Liferay Tomcat 6 bundle installed in <span class="file">/usr/local/liferay</span>.
 
-Since there can be many various setups, the following packages are optional:
-<ul>
-  <li>JRuby</li>
-  <li>PostgreSQL</li>
-</ul>
-
+Since there can be many different setups, you may also install JRuby, and for database integration support, install PostgreSQL.
 </p>
 
 <p>
-Install Liferay.
+Caterpillar is now migrated to RubyGems.org, so you will have the latest release from <em>gem</em>.
+Install the Caterpillar gem, clone the example application from the master branch and start the server.
+<p class="code">
+ $ gem install caterpillar --no-ri --no-rdoc<br />
+ $ git clone git://github.com/lamikae/rails-portlet.git<br />
+</p>
+
+If you did not <tt>git submodule init &amp;&amp; git submodule update</tt>, you need to <tt>pluginize</tt> Caterpillar and remove the broken symlink.
+<p class="code">
+ $ cd rails-portlet/example<br />
+ $ rm -f vendor/plugins/caterpillar<br />
+ $ caterpillar pluginize
+</p>
+
+Start the server . . .
+<p class="code">
+$ ./script/server 
+</p>
+. . and navigate to <a href="http://localhost:3000/doc/defaultsetup.html">http://localhost:3000/doc/defaultsetup.html</a>, where you should find this document.
+</p>
+
+<h2>
+All right, Rails is running. 
+</h2>
+<p>
+Then install Liferay. Download the 5.2.3 Tomcat 6 bundle from <a href="http://www.liferay.com/downloads/">liferay.com</a>.
 
 <p class="code">
   $ cd /usr/local<br />
   $ unzip liferay-portal-tomcat-6.0-5.2.3.zip<br />
-  $ ln -s liferay-portal-tomcat-6.0-5.2.3 liferay
+  $ sudo chown -R `whoami` liferay-portal-5.2.3  # give yourself privileges
 </p>
 </p>
 
-
-<p>
-Install the Caterpillar gem, clone the example application from the master branch and start the server.
-
-<p class="code">
- $ gem install caterpillar --no-ri --no-rdoc<br />
- $ git clone git@github.com:lamikae/rails-portlet.git<br />
- $ cd rails-portlet<br />
- $ git submodule update<br />
- $ cd example<br />
- $ ./script/server 
-</p>
-
-Check that it is running by navigating to <a href="http://localhost:3000/doc/defaultsetup.html">http://localhost:3000/doc/defaultsetup.html</a>, where you should see this document.
-</p>
-
-<p>
-If Liferay is running, stop it now.
-
-Check the configuration file <span class="file">config/portlets.rb</span> that the settings match your environment.<br />
+If you chose another installation directory, check the configuration file <span class="file">config/portlets.rb</span> that the settings match your environment.<br />
 Install the required JAR:
 
 <p class="code">
- $ sudo caterpillar jar:install
+ $ cd rails-portlet/example<br />
+ $ caterpillar jar:install
 </p>
 
 The example application hosts the portlet test bench. Install the XML for this portlet:
 <p class="code">
- $ sudo caterpillar xml deploy
+ $ caterpillar deploy:xml
 </p>
 
 </p>
@@ -63,11 +65,10 @@ The example application hosts the portlet test bench. Install the XML for this p
 <p>
 Then you're ready to boot up Liferay.
 <p class="code">
-  $ cd /usr/local/liferay<br />
-  $ su - tomcat bin/startup.sh ; sleep 4; tail -f logs/catalina.out
+ $ cd /usr/local/liferay-portal-5.2.3/tomcat-6.0.18<br />
+ $ bin/startup.sh &amp;&amp; sleep 4 &amp;&amp; tail -f logs/catalina.out
 </p>
 
-In case you don't have the 'tomcat' user, replace 'su - tomcat' with 'sudo'.<br />
 You should see lines like this in the output:
 
 <p class="code">
@@ -81,7 +82,8 @@ INFO: Server startup in 45329 ms
 </p>
 
 <p>
-Then you're ready to browse to <a href="http://localhost:8080/">http://localhost:8080/</a>. Login and click on 'add application' on the JavaScript menu on the upper right corner. You should see the 'example' category. Open it and add the test bench.
+Then you're ready to browse to <a href="http://localhost:8080/">http://localhost:8080/</a>.
+Login (click on "login as Bruno"), then add a new page and open it. On an empty page click on 'add application' on the JavaScript menu on the upper right corner. You should see the 'Caterpillar' category. Open it and add the test bench.
 </p>
 
 <p>
