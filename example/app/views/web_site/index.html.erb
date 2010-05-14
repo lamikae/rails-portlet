@@ -8,7 +8,10 @@
 Rails-portlet runs a webapp, such as Ruby on Rails, in a standard <a href="http://jcp.org/en/jsr/detail?id=286">JSR286 Java portlet</a>. The tools and default configuration have been developed in  <a href="http://www.liferay.com">Liferay</a> &amp; Rails + PostgreSQL. This makes agile portlet development on J2EE platform easier to manage.
 </p>
 <p>
-Liferay handles the user management, page layouts ("window management") and other common portal application principles. This workload is off the development team.
+This video shows the open development history until May 12, 2010. 
+</p>
+<p>
+<object width="400" height="300"><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=11694038&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" /><embed src="http://vimeo.com/moogaloop.swf?clip_id=11694038&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="400" height="300"></embed></object>
 </p>
 
 <h1>What environment does this run in?</h1>
@@ -20,25 +23,12 @@ Regarding application development for the Liferay platform and database integrat
 <h1>So how do I get started?</h1>
 <p>
 The aim of this project is to get development quickly on track, with as much automation as possible.
-If you want to build a Rails app and run it on Liferay in portlets,
-</p>
-
-<div>
-<%= image_tag 'caterpillar/caterpillar.gif', :alt => "", :style => "float: left; overflow: auto;" -%>
-<p class="code" style="overflow: auto;">
- gem install caterpillar
-</p>
-</div>
-
-<p>
-and download the latest supported Liferay/Tomcat bundle (v5.2) and Rails v2.3. For usable Rails/Liferay database integration, please use PostgreSQL and install the <em>lportal</em> gem. It provides a set of migrations that are required to run before starting the application. The master branch contains incomplete MySQL support.
-<br />
-See the <%= link_to 'default setup guide', doc_url(:action => 'defaultsetup') %>.
+If you want to build a Rails app and run it on Liferay in portlets, start from the <%= link_to 'setup guide', doc_url(:action => 'defaultsetup') %>.
 </p>
 
 <h1>What about other portals?</h1>
 <p>
-Portals without support for portlet filters introduced in the JSR286 spec cannot be supported.
+Portals without support for portlet filters introduced in the JSR286 spec are not supported.
 </p>
 
 <h1>What about other frameworks?</h1>
@@ -48,7 +38,7 @@ If you want to develop, say, a <em>Django</em> app, or a <em>.NET</em> app, noth
 
 <h1>What about Web Proxy Portlet or portletbridge?</h1>
 <p>
-Wait for an upcoming blog post.
+Read the <a href="http://blogger-mikael.blogspot.com/2010/04/comparison-of-web-proxy-portlet.html">blog post</a>.
 </p>
 
 <h1>How to contact the project?</h1>
