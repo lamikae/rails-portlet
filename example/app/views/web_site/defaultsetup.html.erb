@@ -7,7 +7,7 @@ So far, the minimum setup and versions known to work:
   <li>Liferay 5.1.1 or 5.2.x (5.1.2 does NOT work, see <a href="http://issues.liferay.com/browse/LPE-44">LPE-44</a>)</li>
   <li>Git</li>
 </ul>
-And if you want to go with the default configuration, use the Liferay Tomcat 6 bundle installed in <span class="file">/usr/local/liferay</span>.
+And if you want to go with the default configuration, use the Liferay Tomcat 6 bundle installed in <span class="file">/usr/local/liferay-portal-5.2.3/tomcat-6.0.18</span>.
 
 Since there can be many different setups, you may also install JRuby, and for database integration support, install PostgreSQL.
 </p>
@@ -57,7 +57,7 @@ Install the required JAR:
 
 The example application hosts the portlet test bench. Install the XML for this portlet:
 <p class="code">
- $ caterpillar deploy:xml
+ $ caterpillar xml deploy:xml
 </p>
 
 </p>
