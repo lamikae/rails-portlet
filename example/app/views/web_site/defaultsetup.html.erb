@@ -45,7 +45,15 @@ Then install Liferay. Download the 5.2.3 Tomcat 6 bundle from <a href="http://ww
   $ unzip liferay-portal-tomcat-6.0-5.2.3.zip<br />
   $ sudo chown -R `whoami` liferay-portal-5.2.3  # give yourself privileges
 </p>
+
+<!--
+Liferay 6:
+<p class="code">
+ $ cd /usr/local<br />
+ $ unzip ~/work/bin/liferay-portal-tomcat-6.0.1.zip<br />
+ $ sudo chown -R `whoami` liferay-portal-6.0.1  # give yourself privileges
 </p>
+-->
 
 If you chose another installation directory, check the configuration file <span class="file">config/portlets.rb</span> that the settings match your environment.<br />
 Install the required JAR:
@@ -57,7 +65,7 @@ Install the required JAR:
 
 The example application hosts the portlet test bench. Install the XML for this portlet:
 <p class="code">
- $ caterpillar xml deploy:xml
+ $ caterpillar deploy:xml
 </p>
 
 </p>
