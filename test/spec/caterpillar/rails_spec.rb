@@ -54,6 +54,11 @@ describe @caterpillar do
     return _gem
   end
 
+  def test_caterpillar_spec
+    Dir.chdir File.join(@pwd,'..','caterpillar')
+    system("#{@ruby} `which rake` spec").should == true
+  end
+
   def install_caterpillar
     gem = package_caterpillar
     system("sudo #{@ruby} `which gem` install #{gem} --no-ri --no-rdoc").should == true  
@@ -61,7 +66,7 @@ describe @caterpillar do
   
   def pluginize_caterpillar(rails_version)
     STDOUT.puts 'Using ' + @ruby
-    #install_caterpillar # XXX
+    install_caterpillar # XXX
     rails_home = create_rails(rails_version)
     Dir.chdir rails_home
     system("#{@ruby} `which caterpillar` pluginize >/dev/null").should == true
@@ -75,13 +80,27 @@ describe @caterpillar do
     Dir.chdir(rails_home)
 
     # funny way to read startup messages from Rails > 2.1.2 ...
-    #f = Tempfile.new('')
-    f_out = File.new '/Users/mikael/work/rails-portlet-github/test/stdout'
-    f_err = File.new '/Users/mikael/work/rails-portlet-github/test/stderr'
-    `echo -e '\n\$stdout = File.new "#{f_out.path}", "a"' >> config/environment.rb`
-    `echo -e '\n\$stderr = File.new "#{f_err.path}", "a"' >> config/environment.rb`
+    f_out = Tempfile.new('stdout')
+    f_err = Tempfile.new('stderr')
 
-    # enable caterpillar
+    # tweak environment.rb
+    env = File.open('config/environment.rb','r+')
+    _env = ''
+    env.each_line do |line|
+      if not line[/^end/]
+        _env << line
+      else
+        _env << "  config.frameworks -= [ :active_record, :active_resource, :action_mailer ]\n"
+        _env << "end\n"
+        _env << "$stdout = File.new '#{f_out.path}', 'a'\n"
+        _env << "$stderr = File.new '#{f_err.path}', 'a'\n"
+      end
+    end
+    env.seek(0)
+    env.write(_env)
+    env.close
+
+    # enable caterpillar in routes.rb
     routes = File.open('config/routes.rb','r+')
     _routes = routes.readline
     _routes << "  map.caterpillar\n"
@@ -90,46 +109,62 @@ describe @caterpillar do
     routes.write(_routes)
     routes.close
 
-    IO.popen("#{@ruby} script/server -p 3010 > #{f_out.path} 2>#{f_err.path} ") do |pipe|
-      pid = pipe.pid
-      @@pids << pid
-      puts 'Rails PID: %s' % pid
-      sleep 5
-      begin
-        # no errors in startup log
-        output = f_out.read
-        #puts '--- output ---'
-        #puts output
-        #puts '--------------'
+    begin
+      IO.popen("#{@ruby} script/server -p 3010 > #{f_out.path} 2>#{f_err.path} ") do |pipe|
+        pid = pipe.pid
+        @@pids << pid
+        puts 'Subprocess PID: %s' % pid
+        sleep 5
+        begin
+          # no errors in startup log
+          output = f_out.read
+          #puts '--- output ---'
+          #puts output
+          #puts '--------------'
 
-        errors = f_err.read
-        #puts '--- errors ---'
-        #puts errors
-        #puts '--------------'
-        #if errors
-        #  errors.each_with_index {|line,i| puts line if i<3}
-        #end
-        errors[/.*(error|errno).*/i].should == nil
+          errors = f_err.read
+          #puts '--- errors ---'
+          #puts errors
+          #puts '--------------'
+          #if errors
+          #  errors.each_with_index {|line,i| puts line if i<3}
+          #end
+          errors[/.*(error|errno).*/i].should == nil
 
-        # check that test bench loads
-        h = Net::HTTP.new('127.0.0.1', 3010)
-        resp, data = h.get('/caterpillar/test_bench', nil)
-        if resp != Net::HTTPSuccess
-          # show errors from the log file
-          log = File.open('log/development.log')
-          err = ''
-          3.times { err << log.readline() }
-          err.should == nil
-          resp.error! # fails before this line
+          # check that test bench loads
+          h = Net::HTTP.new('127.0.0.1', 3010)
+          resp, data = h.get('/caterpillar/test_bench', nil)
+          case resp
+          when Net::HTTPSuccess, Net::HTTPRedirection
+            # OK
+            data[/Rails-portlet testbench/].should_not == nil
+          else
+            # show errors from the log file
+            log = File.open('log/development.log')
+            puts log.read()[/.*(error|errno).*/i]
+            resp.error!
+          end
+
+        # make sure the server is shut down
+        ensure
+          # kill subprocess
+          puts 'Killing PID: %s' % pid
+          Process.kill("TERM",pid) 
         end
-        data[/Rails-portlet testbench/].should_not == nil
-
-      # make sure the server is shut down
-      ensure
-        Process.kill("TERM",pid+1) # XXX pid+1 works on OS X
+      end
+    # XXX: kill Rails brutally
+    #
+    # when redirecting STDERR, popen has incorred PID
+    # http://blog.robseaman.com/2008/12/12/sending-ctrl-c-to-a-subprocess-with-ruby
+    #
+    # popen4 could be used to have correct PID and STDERR as an IO stream,
+    # but Rails > 2.1.2 mysteriously hangs.
+    ensure
+      rails_pid = `ps ax|grep ruby`[/(\d+) .*server -p 3010$/,1]
+      if rails_pid
+        Process.kill(9,rails_pid.to_i)
         sleep 1
-        #@@pids.delete pid
-
+        puts 'Killed Rails PID: %s' % rails_pid
       end
     end
   end
@@ -149,23 +184,17 @@ describe @caterpillar do
   after(:each) do
     #FileUtils.rm_rf @tmpdir
     Dir.chdir @pwd
-=begin
-    @@pids.each do |pid|
-      puts 'killing (for sure) %s' % pid
-      begin
-        Process.kill("TERM",pid)
-      rescue
-        nil
-      end
-    end
-=end
   end
   
+  ####################################################
+  #
+  # try different Ruby interpreter / Rails combinations ...
+  #
 
-  ### try different Ruby interpreter / Rails combinations ...
-
-  # quick debug
-  #rails_home = '/Users/mikael/work/rails-portlet-github/example'
+  it "run caterpillar rspec tests with Ruby 1.8" do
+    #@ruby = '/usr/bin/ruby'
+    #test_caterpillar_spec
+  end
 
   it "pluginize caterpillar to Rails 2.1.2 with Ruby 1.8" do
     @ruby = '/usr/bin/ruby'
@@ -185,7 +214,7 @@ describe @caterpillar do
     test_rails(rails_home)
   end
 
-=begin # Do not use Ruby1.9 with Raise older than 2.3
+=begin # Do not use Ruby1.9 with Rails older than 2.3
   it "pluginize caterpillar to Rails 2.1.2 with Ruby 1.9" do
     @ruby = `which ruby1.9`.strip
     rails_home = pluginize_caterpillar('2.1.2')
@@ -198,6 +227,7 @@ describe @caterpillar do
     test_rails(rails_home)
   end
 =end
+
   it "pluginize caterpillar to Rails 2.3.8 with Ruby 1.9" do
     @ruby = `which ruby1.9`.strip
     rails_home = pluginize_caterpillar('2.3.8')
