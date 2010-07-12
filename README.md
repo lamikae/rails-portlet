@@ -5,18 +5,7 @@ The tools and configuration though is fine-tuned for Liferay and Rails co-operaa
 
 This is the top level container for the submodules and the example. The example Rails application contains [the web page](http://rails-portlet.rubyforge.org/), portlet test bench and the functionality to deploy the application into a JSR286 container.
 
-Installation from Git
-=====================
-Remember to update the submodules after initial clone.
-
-<code>
- $ git clone git://github.com/lamikae/rails-portlet.git<br />
- $ cd rails-portlet<br />
- $ git submodule init<br />
- $ git submodule update
-</code>
-
-Further instructions
-====================
+Quickstart
+==========
 Please read [the setup guide](http://rails-portlet.rubyforge.org/doc/defaultsetup.html).
 
