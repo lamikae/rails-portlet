@@ -8,6 +8,7 @@ Caterpillar::Config.new do |portlet|
   # Currently only Liferay is supported. You may optionally define the version.
   portlet.container = Liferay
   portlet.container.version = '5.2.3'
+  #portlet.container.version = '6.0.1'
 
   # If you want to install the Rails-portlet JAR into the container, the container
   # WEB-INF will be used.
@@ -17,7 +18,7 @@ Caterpillar::Config.new do |portlet|
   #
   # No changes are made to any of the files in this directory while making XML,
   # only the deploy and install tasks make any changes.
-  # portlet.container.root = '/usr/local/liferay/'
+#  portlet.container.root = '/usr/local/liferay-portal-6.0.1/tomcat-6.0.26'
 
   # The server that the container is running on.
   # Possible values:
@@ -36,7 +37,7 @@ Caterpillar::Config.new do |portlet|
 
   # The hostname and port.
   # By default the values are taken from the request.
-  portlet.host = 'http://0.0.0.0:3000'
+  portlet.host = 'http://localhost:3000'
  
   # If the Rails is running inside a servlet container such as Tomcat,
   # you can define the servlet here.
@@ -69,13 +70,20 @@ Caterpillar::Config.new do |portlet|
 
   # Rails-portlet testing application.
   # NOTE: this needs to be activated by 'map.caterpillar' in RAILS_ROOT/config/routes.rb
-  portlet.instances << {
-    :name     => 'portlet_test_bench',
-    :title    => 'Rails-portlet test bench',
-    :category => 'Caterpillar'
-  }
+  portlet.instances += [
+    {
+      :name     => 'portlet_test_bench',
+      :title    => 'Rails-portlet test bench',
+      :category => 'Caterpillar'
+    },
+    {
+      :name => 'hungry_bear',
+      :category => 'Caterpillar'
+    }
+  ]
+  
 
   # this will include all named routes without further configuration
-  portlet.include_all_named_routes = true
+  portlet.include_all_named_routes = false
 
 end
