@@ -91,19 +91,25 @@ font-size: 1.4em;
 h2 {
 font-size: 1.2em;
 padding: 0;
-margin: 0.8em 0 0.2em;
+margin: 1.2em 0 0.3em;
+}
+
+div {
 }
 
 p {
 padding: 2px;
+float: none;
 }
 
-p.code  {
-padding: 5px;
+p.code, div.code {
+margin: 0.5em auto 1.0em 1.0em;
+padding: 0.4em;
 border: 1px dotted gray;
-margin-left: 20px;
-background: #cce5ff;
+background: #c2e5ee;
+float: break;
 width: auto;
+max-width: 88%;
 }
 
 span.file {
