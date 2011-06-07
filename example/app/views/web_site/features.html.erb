@@ -1,45 +1,41 @@
-<%= image_tag 'overview.png', :alt => 'Technical overview', :style => 'float: right; width: 40%; padding: 20px;' -%>
+<h1>Technical details</h1>
 
-<h1>Features</h1>
-<p>
-The project hosts three submodules – <a href="http://github.com/lamikae/html2jsr286">html2jsr286</a>, <a href="http://github.com/lamikae/caterpillar">caterpillar</a> and <a href="http://github.com/lamikae/lportal">lportal</a>. <b>Caterpillar contains the portlet JAR</b>, so you only need the Caterpillar gem unless you are an experimentalist. It contains a set of rake tasks and helper libraries for Rails applications serving Liferay portlets. It is the only package you'll need to install to build Rails portlets for the portlet container. 
-</p>
-
-<h2>Session management and security</h2>
-<p>
-User ID is passed from RenderRequest's REMOTE_USER to the remote server in a cookie. The remote application is authenticated transparently. Also any cookies set by the remote server are automatically added to succeeding requests, so it is possible to use Rails' <em>session[]</em> feature.
-</p>
-<p>
-Liferay can also detect the context the portlet is deployed in. The group ID can be passed to the remote server in requst parameters.
-</p>
+<h2>Overview</h2>
 
 <p>
-The mechanism to prevent request spoofing with a forged UID is based on a shared secret, that is given to the portlet at instantiation, inserted into a <em>special cookie</em>, and the value checked at the remote server. Caterpillar provides handy helpers:
-
-<p class="code">
-class ApplicationController<br />
-&nbsp; &nbsp; # Import security filters<br />
-&nbsp; &nbsp; include Caterpillar::Security<br />
-&nbsp; &nbsp; secure_portlet_sessions<br />
-<br />
-
-&nbsp; &nbsp;  # get @uid from cookie<br />
-&nbsp; &nbsp;  before_filter [:authorize_agent, :authorize_request], :only =&gt; :get_liferay_uid<br />
-&nbsp; &nbsp;  before_filter :get_liferay_uid
+The project hosts three submodules – <a href="http://github.com/lamikae/html2jsr286">html2jsr286</a>, <a href="http://github.com/lamikae/caterpillar">caterpillar</a> and <a href="http://github.com/lamikae/lportal">lportal</a>.
+<ul>
+  <li>caterpillar contains the portlet JAR, a set of rake tasks and a Rails plugin</li>
+  <li>html2jsr286 is a Java portlet that handles communication between the portlet container and the web app</li>
+  <li>lportal is the ActiveRecord library for communicating with the Liferay database from Rails – currently this is unmaintained, and has been tested to work only with Liferay 5 PostgreSQL database</li>
+</ul>
 </p>
 
-After inserting this to your ApplicationController, you will have Liferay UID in <em><span style="color: green;">@uid</span></em> at use in all actions. <!-- undocumented The <em>authorize</em> filter is documented in Caterpillar::Security. -->
-</p>
+<%= image_tag 'overview.png', :alt => 'Technical overview', :style => 'float: none; width: 40%; margin: 0.5em 2em 1em;' -%>
 
-<h2>Database integration</h2>
+<h2>Session cookies</h2>
 <p>
-Database integration is optional, for which you need the <em><a href="http://lportal.rubyforge.org/">lportal</a></em> gem, but so far it only works properly with PostgreSQL.
+  html2jsr286 does support session cookies. Sessions from the browser are identified by Liferay, and Rails session cookies are maintained between reloads. The session cookies are never stored to the client browser, but to the Liferay database. You can use cookies in your application like you would do without the Liferay container.
 </p>
 
-<!-- ask the author
-<h2>EJB integration</h2>
+<h2>Liferay variables</h2>
 <p>
-Provided by ActiveEJB.
+  User ID (UID) and group ID (GID) are passed from Liferay to Rails in a session cookie. Caterpillar contains filters to retrieve these values to the Rails controller. Please refer to the <a href="https://github.com/lamikae/caterpillar/blob/master/portlet_test_bench/controllers/caterpillar/liferay_controller.rb">LiferayController</a> in portlet test bench sources for their usage.
+
+
+<h2>Security</h2>
+<p>
+  To protect Rails server from accepting requests that are not coming from the Liferay container, the Rails server and a portlet have a shared secret that is passed in a cookie with each request. A new secret is generated when the caterpillar generator is run, and is stored to config/portlets.rb. Please refer to Caterpillar README and LiferayController for its usage.
 </p>
+
+
+<!--
+<h2>File uploads</h2>
+TODO: write about this
+
+
+<h2>AJAX</h2>
+TODO: write about this
+
 -->
 

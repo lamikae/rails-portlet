@@ -3,6 +3,7 @@ margin: 0 4px;
 background: none repeat scroll 0 0 #EEF0F2;
 background-image: -webkit-gradient(linear, left top, left bottom, from(#eef0f2), to(#ffffff));
 background-image: -moz-linear-gradient(top left, #eef0f2, #ffffff);
+background-image: -o-linear-gradient(top left, #eef0f2, #ffffff);
 }
 #banner {
 color: black;
@@ -50,6 +51,7 @@ height: auto;
 background: #414445;
 background: -webkit-gradient(linear, left top, left bottom, from(rgba(116,119,120,0.4)), to(rgba(65,68,69,0.9)));
 background: -moz-linear-gradient(top , rgba(116,119,120,0.4), rgba(65,68,69,0.9));
+background: -o-linear-gradient(top , rgba(116,119,120,0.4), rgba(65,68,69,0.9));
 margin: 0.4em auto;
 padding: 0 5px;
 min-height: 2.2em;
@@ -142,4 +144,12 @@ padding: 4px;
 font-style: italic;
 font-size: 0.9em;
 }
-
+#footer {
+  box-shadow: 0 1px 3px rgba(100,100,100, 0.7);
+  background: #ccc;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(65,68,69,0.4)), to(rgba(116,119,120,0.2)));
+  background: -moz-linear-gradient(top , rgba(65,68,69,0.4), rgba(116,119,120,0.2) );
+  background: -o-linear-gradient(top , rgba(65,68,69,0.4), rgba(116,119,120,0.2) );
+  margin: 4px 1em 1em;
+  padding: 0.7em;
+}

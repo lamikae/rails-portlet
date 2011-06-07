@@ -116,7 +116,7 @@ Start the example Rails application server.
       ./script/server
 
 
-Browse to <a href="http://localhost:8080/">http://localhost:8080/</a>. Login (click on "login as Bruno"), then add a new page and open it. On an empty page use the Liferay JavaScript controls to add a new application. You should see the 'Rails-portlet example' category. Open it and add the test bench.
+Browse to [localhost:8080](http://localhost:8080/). Login (click on "login as Bruno"), then add a new page and open it. On an empty page use the Liferay JavaScript controls to add a new application. You should see the 'Rails-portlet example' category. Open it and add the test bench.
 
 
 

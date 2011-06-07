@@ -1,81 +1,12 @@
-<h1>Setup for running Rails in Liferay portlets</h1>
-
-<p>
-This setup gets you up and running with:
-<ul>
-  <li>Liferay 5 or 6 (LR 5.1.2 does NOT work, see <a href="http://issues.liferay.com/browse/LPE-44">LPE-44</a>)</li>
-  <li>Rails 2</li>
-</ul>
-
-
-</p>
-
 <p>
   <h2>Quickstart with example application</h2>
 For quick evaluation, install Liferay 6 and clone the example Rails 2.3 application.
-Please refer to the <a href="http://github.com/lamikae/rails-portlet/blob/master/example/README.rdoc">example README</a> for further instructions.
+Please refer to the <a href="http://github.com/lamikae/rails-portlet/blob/master/example/README.md">example README</a> for further instructions.
 </p>
 
 <p>
-  <h2>Prepare your own application</h2>
+  <h2>Deploy your own application</h2>
 
-For preparing your own application, see the Caterpillar <a href="http://github.com/lamikae/caterpillar/blob/master/README.rdoc">README</a>.
-</p>
-
-<div>
-<p class="code">
-  gem install caterpillar<br />
-  git clone git://github.com/lamikae/rails-portlet.git<br />
-  cd rails-portlet/<br />
-  git submodule init<br />
-  git submodule update<br />
-</p>
-<p>
-  Further commands and filenames refer to the <span class="file">rails-portlet</span> directory.
-</p>
-
-
-<!-- <tt>pluginize</tt> Caterpillar and remove the broken symlink.
-<p class="code">
-  cd rails-portlet/example<br />
-  rm -f vendor/plugins/caterpillar<br />
-  caterpillar pluginize
-</p>
--->
-
-<p>
-  Start the example application server at <span class="file">example</span>.
-  <div class="code">
-    cd example<br />
-    ./script/server 
-  </div>
-  . . and navigate to <a href="http://localhost:3000/doc/defaultsetup.html">http://localhost:3000/doc/defaultsetup.html</a>, where you should find this document.
-</p>
-
-<h2>
-Rails is now running. Now, the Liferay setup:
-</h2>
-<div>
-  <p>
-Download the Liferay 5.2.3 Tomcat 6 bundle from <a href="http://www.liferay.com/downloads/">liferay.com</a>.
-
-<div class="code">
-  cd /usr/local<br />
-  unzip liferay-portal-tomcat-6.0-5.2.3.zip<br />
-  sudo chown -R `whoami` liferay-portal-5.2.3  # give yourself proper privileges
-</div>
-</p>
-
-<!--
-Liferay 6:
-<p class="code">
- $ cd /usr/local<br />
- $ unzip ~/work/bin/liferay-portal-tomcat-6.0.1.zip<br />
- $ sudo chown -R `whoami` liferay-portal-6.0.1  # give yourself privileges
-</p>
--->
-
-<p>
-  <%= image_tag 'RailsTestBench.png', :style => 'float: none;' %>
+For deploying your own Rails application, please see the <a href="http://github.com/lamikae/caterpillar/blob/master/README.rdoc">Caterpillar README</a>.
 </p>
 

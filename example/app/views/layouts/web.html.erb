@@ -18,7 +18,7 @@
   </head>
   <body>
     <header id="banner" role="banner">
-      <%= image_tag "liferay_happiness.png" %>
+      <%= image_tag "liferay_happiness.png", :alt => '' %>
       <div id="title">Rails-portlet
         </div>
         <!-- <div>
@@ -31,7 +31,14 @@
   <nav id="navigation">
 <ul>
   <% @navigation.each do |link| -%>
-    <li class=<%= request.url[/#{link[:url]}$/] ? "selected" : "" %>>
+  <% li_class = 
+    if link[:url][/index/] and (request.url[/\/$/] or request.url[/index/])
+      "selected"
+    else
+      request.url[/#{link[:url]}$/] ? "selected" : "" 
+    end
+  %>
+    <li class=<%= li_class %>>
       <%= link_to link[:label], link[:url] %>
     </li>
   <% end -%>
@@ -43,6 +50,9 @@
       <%= yield %>
     </div>
 </div>
+<footer id="footer" role="footer">
+  <span>Rails-portlet is open source, under the MIT license.</span>
+</footer>
 
 <% unless RAILS_ENV == 'development' %>
 <script type="text/javascript">

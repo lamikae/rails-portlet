@@ -8,7 +8,7 @@ class WebSiteController < ApplicationController
   def get_navigation
     @navigation=[
       { :label => 'intro',
-        :url   => '/'
+        :url   => doc_url(:action => 'index')
       },
       { :label => 'setup guide',
         :url   => doc_url(:action => 'defaultsetup')

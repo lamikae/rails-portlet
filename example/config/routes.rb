@@ -51,7 +51,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.root :controller => 'WebSite', :action => 'index', :format => 'html'
   map.doc(
-    '/doc/:action.html',
+    '/:action.html',
     { :controller => 'WebSite' })
 
   # Install the default routes as the lowest priority.
