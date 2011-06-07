@@ -1,7 +1,7 @@
 /* main.css */
 
 body {
-background-color: #FFFFCC;
+background-color: gray;
 }
 
 /* testing leading whitespaces */
@@ -38,7 +38,7 @@ font: 14px Times New Roman;
 
 /* used on css test page */
 #simple_content {
-margin: 25px; padding: 10px; border: 1px solid #000000; background: #93FFE4;
+margin: 25px; padding: 10px; border: 1px solid #000000; background: purple; color: white;
 }
 
 /* resource test page */
@@ -78,18 +78,18 @@ padding: 30px;
 padding-top: 0px;
 }
 /* form input label */
-#http_postform span {
+.http_postform span {
 margin-left: 10px;
 margin-right: 5px;
 }
 /* form input paragraph */
-#http_postform p {
+.http_postform p {
 padding: 4px;
 margin: 3px;
 /* border: 1px dotted gray; */
 }
 /* form submit */
-#submit_tags {
+.submit_tags {
 margin-left: 10px;
 margin-right: 5px;
 }
@@ -97,21 +97,22 @@ margin-right: 5px;
 #http_post h1 {
 font: 21px Times New Roman;
 padding: 3px;
+border-bottom: 1px dotted gray;
 }
 #http_post h2 {
-font: 12px Times New Roman;
+font: 15px Times New Roman;
 border-bottom: 1px dashed gray;
 padding: 3px;
 }
 #post_msg {
 font: 21px Arial;
 font-style: italic;
-padding-left: 20px;
+padding-left: 0px;
 }
 #post_info {
 font: 14px Arial;
 font-style: italic;
-padding-left: 20px;
+padding: 0 0.1em 1.5em;
 }
 
 /* login */
