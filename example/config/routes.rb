@@ -37,16 +37,13 @@ ActionController::Routing::Routes.draw do |map|
 
   map.caterpillar
 
+  # example actions
   map.hungry_bear(
     'bear/hungry',
     { :controller => 'Bear',  :action => 'hungry' })
   map.adorable_otters(
-    ':uid/:gid/otters/adorable',
+    'otters/adorable',
     { :controller => 'Otter', :action => 'adorable' }) 
-
-  #map.logo(
-  #  'bear/logo',
-  #  { :controller => 'Bear',  :action => 'logo' })
 
   # web site
   map.connect ':controller/:action.:format'

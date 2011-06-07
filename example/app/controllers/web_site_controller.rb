@@ -8,18 +8,18 @@ class WebSiteController < ApplicationController
   def get_navigation
     @navigation=[
       { :label => 'intro',
-        :url   => '/index.html'
-      },
-      { :label => 'features',
-        :url   => doc_url(:action => 'features')
+        :url   => '/'
       },
       { :label => 'setup guide',
         :url   => doc_url(:action => 'defaultsetup')
       },
+      { :label => 'details',
+        :url   => doc_url(:action => 'features')
+      },
       #{ :label => 'portlet development guide',
       #  :url   => doc_url(:action => 'development')
       #},
-      { :label => 'source',
+      { :label => 'source code',
         :url   => 'http://github.com/lamikae/rails-portlet'
       },
     ]

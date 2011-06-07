@@ -1,2 +1,0 @@
-Example Rails app ready for deployment in JSR286 portlet with Caterpillar.
-

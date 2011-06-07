@@ -1,3 +1,9 @@
 tmp/*
 log/*
 *.swp
+*.xml
+test/fixtures
+test/unit/lportal
+lib/lportal
+caterpillar-developer
+config/database.yml
