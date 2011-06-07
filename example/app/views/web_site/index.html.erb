@@ -2,28 +2,26 @@
   <%= image_tag 'rails-portlet-welcome.png', :alt => "" %>
 </div>
 
-<h1>Web application development for JSR286 portlet container</h1>
+<h1>Develop your web application decoupled from the Liferay Java stack</h1>
 <p>
-Rails-portlet runs a webapp, such as Ruby on Rails, in a standard <a href="http://jcp.org/en/jsr/detail?id=286">JSR286 Java portlet</a>. The tools and default configuration have been developed in  <a href="http://www.liferay.com">Liferay</a> &amp; Rails with PostgreSQL (optional). This makes agile portlet development on J2EE platform easier to manage.
+Rails-portlet was originally developed to run a Rails app inside Liferay <a href="http://jcp.org/en/jsr/detail?id=286">JSR286 portlet</a> container. It is not specifically tied to either Rails or Liferay, although it is being developed for this particular combination. Currently it supports Liferay 5 and 6, and the helper utilities work with Rails 2.
 </p>
+<!--
 <div style="margin-bottom: 2em;">
 	<p>
 		<object width="400" height="300"><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=11694038&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" /><embed src="http://vimeo.com/moogaloop.swf?clip_id=11694038&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="400" height="300"></embed></object>
 	</p>
 	<em>This animation shows the development history until May 12, 2010. Created with Gource with <a href="http://blogger-mikael.blogspot.com/2010/05/gource-animation-of-rails-portlet.html">this</a> Python script.</em>
 </div>
+-->
 
-
-<h1>FAQ</h1>
-<h2>What environment does this run in?</h2>
 <p>
-Liferay 5.x, tested on Tomcat. Rails 2.x has been used on a number of projects, deployed to production as JRuby servlets and on MRI Mongrel dispatchers.<br />
-Regarding application development for the Liferay platform and database integration, the v5 schema modeling is working only on PostgreSQL.
+Rails-portlet has been successfully deployed in large systems and can be considered stable.
 </p>
 
-<h2>So how do I get started?</h2>
+<h2>Get started with Rails 2 and Liferay 6</h2>
 <p>
-The aim of this project is to get development quickly on track, with as much automation as possible, using Liferay as the CMS and Rails to write custom applications. If you want to build a Rails app and run it in a portlet, start from the <%= link_to 'setup guide', doc_url(:action => 'defaultsetup') %>.
+If you want to build a Rails app and run it inside Liferay, start from the <%= link_to 'setup guide', doc_url(:action => 'defaultsetup') %>.
 </p>
 
 <h2>What about other portals?</h2>
@@ -31,9 +29,9 @@ The aim of this project is to get development quickly on track, with as much aut
 Portals without support for portlet filters introduced in the JSR286 spec are not supported.
 </p>
 
-<h2>What about other frameworks?</h2>
+<h2>Unless Rails is your cup of tea?</h2>
 <p>
-If you want to develop, say, a <em>Django</em> app, or a <em>.NET</em> app, nothing is stopping you. You will need to update the portlet XML files manually, but <em>html2jsr286</em> allows you to run arbitrary webapp in a portlet.
+The helper utility <em><a href="http://github.com/lamikae/caterpillar">Caterpillar</a></em> is a Ruby gem that can run without Rails, although majority of it is a Rails plugin. Future versions may contain functionality to parse the portlet XML outside the Rails environment. <u>You need to install the <em>rails-portlet jar file</em> and write the portlet XML configuration manually</u>. Refer to Caterpillar documentation and source code. ;)
 </p>
 
 <h2>What about Web Proxy Portlet or portletbridge?</h2>
@@ -45,7 +43,7 @@ Read this <a href="http://blogger-mikael.blogspot.com/2010/04/comparison-of-web-
 <p>
 If you need support
 <ul>
-	<li> send a message to the author (you can find contact info from the source code repository)
+	<li> send a message to the author on Github
 	</li>
 	<li> join the  <%= link_to 'rails-portlet-bugs mailing list', 'http://rubyforge.org/mailman/listinfo/rails-portlet-bugs' -%> 
 	</li>
@@ -54,10 +52,10 @@ If you need support
 </ul>
 </p>
 
-<h1>Supporters</h1>
+<!-- <h1>Supporters</h1>
 <p>
 2008-2009 <a href="http://celamanzi.ning.com/">Cel'Amanzi</a><br />
 2009-2010 <a href="http://www.youleaf.com/">YouLeaf</a><br />
-</p>
+</p> -->
 
 

@@ -2,9 +2,9 @@
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <title>Rails-portlets – webapps for JSR286 containers</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <%= stylesheet_link_tag 'main' %>
+
+    <title>Rails-portlet – JSR286 webapp portlet</title>
 
     <meta name="Keywords"
           content="Rails, Liferay, Java, J2EE,
@@ -13,20 +13,32 @@
     <meta name="Description"
           content="Deploy web applications on JSR286 portal containers.">
 
+    <%= stylesheet_link_tag 'main' %>
+
   </head>
   <body>
+    <header id="banner" role="banner">
+      <%= image_tag "liferay_happiness.png" %>
+      <div id="title">Rails-portlet
+        </div>
+        <!-- <div>
+          Run Rails-like web application in a Liferay portlet.
+        </div> -->
+    </header>
+    
+    
 <div id="wrapper">
-    <div class="caterpillar_navigation">
-<ol>
+  <nav id="navigation">
+<ul>
   <% @navigation.each do |link| -%>
-    <li>
-      <%= link_to link[:label], link[:url], {
-        :style => ("color: #34F94B;" if request.url[/#{link[:url]}$/])} %>
+    <li class=<%= request.url[/#{link[:url]}$/] ? "selected" : "" %>>
+      <%= link_to link[:label], link[:url] %>
     </li>
   <% end -%>
-</ol>
-<div id="title">Rails-portlet – JSR286 webapp portlet</div>
-    </div>
+</ul>
+    </nav>
+    
+    
     <div class="mainframe">
       <%= yield %>
     </div>
