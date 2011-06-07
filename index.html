@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+    <title>Rails-portlet – JSR286 webapp portlet</title>
+
+    <meta name="Keywords"
+          content="Rails, Liferay, Java, J2EE,
+                  JSR286, portlet, portlets, development">
+
+    <meta name="Description"
+          content="Deploy web applications on JSR286 portal containers.">
+
+    <link href="/stylesheets/main.css" media="screen" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+    <header id="banner" role="banner">
+      <img alt="" src="/images/liferay_happiness.png" />
+      <div id="title">Rails-portlet
+        </div>
+        <!-- <div>
+          Run Rails-like web application in a Liferay portlet.
+        </div> -->
+    </header>
+    
+    
+<div id="wrapper">
+  <nav id="navigation">
+<ul>
+      <li class=selected>
+      <a href="/">intro</a>
+    </li>
+      <li class=>
+      <a href="http://rails-portlet.rubyforge.org/doc/defaultsetup.html">setup guide</a>
+    </li>
+      <li class=>
+      <a href="http://rails-portlet.rubyforge.org/doc/features.html">details</a>
+    </li>
+      <li class=>
+      <a href="http://github.com/lamikae/rails-portlet">source code</a>
+    </li>
+  </ul>
+    </nav>
+    
+    
+    <div class="mainframe">
+      <div class="image">
+  <img alt="" src="/images/rails-portlet-welcome.png" />
+</div>
+
+<h1>Develop your web application decoupled from the Liferay Java stack</h1>
+<p>
+Rails-portlet was originally developed to run a Rails app inside Liferay <a href="http://jcp.org/en/jsr/detail?id=286">JSR286 portlet</a> container. It is not specifically tied to either Rails or Liferay, although it is being developed for this particular combination. Currently it supports Liferay 5 and 6, and the helper utilities work with Rails 2.
+</p>
+<!--
+<div style="margin-bottom: 2em;">
+	<p>
+		<object width="400" height="300"><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=11694038&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" /><embed src="http://vimeo.com/moogaloop.swf?clip_id=11694038&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="400" height="300"></embed></object>
+	</p>
+	<em>This animation shows the development history until May 12, 2010. Created with Gource with <a href="http://blogger-mikael.blogspot.com/2010/05/gource-animation-of-rails-portlet.html">this</a> Python script.</em>
+</div>
+-->
+
+<p>
+Rails-portlet has been successfully deployed in large systems and can be considered stable.
+</p>
+
+<h2>Get started with Rails 2 and Liferay 6</h2>
+<p>
+If you want to build a Rails app and run it inside Liferay, start from the <a href="http://rails-portlet.rubyforge.org/doc/defaultsetup.html">setup guide</a>.
+</p>
+
+<h2>Not running Liferay?</h2>
+<p>
+Portals with proper support for the JSR286 spec (portlet 2.0) should technically work.
+</p>
+
+<h2>Unless Rails is your cup of tea?</h2>
+<p>
+The helper utility <em><a href="http://github.com/lamikae/caterpillar">Caterpillar</a></em> is a Ruby gem that can run without Rails, although majority of it is a Rails plugin. Future versions may contain functionality to parse the portlet XML outside the Rails environment. <u>You need to install the <em>rails-portlet jar file</em> and write the portlet XML configuration manually</u>. Refer to Caterpillar documentation and source code. ;)
+</p>
+
+<h2>What about Web Proxy Portlet or portletbridge?</h2>
+<p>
+Read this <a href="http://blogger-mikael.blogspot.com/2010/04/comparison-of-web-proxy-portlet.html">blog post</a> for comparison.
+</p>
+
+<h2>How to contact the project?</h2>
+<p>
+If you need support
+<ul>
+	<li> send a message to the author on Github
+	</li>
+	<li> join the  <a href="http://rubyforge.org/mailman/listinfo/rails-portlet-bugs">rails-portlet-bugs mailing list</a> 
+	</li>
+	<li> <a href="http://github.com/lamikae/rails-portlet/issues">file a bug at Github</a> 
+	</li>
+</ul>
+</p>
+
+<!-- <h1>Supporters</h1>
+<p>
+2008-2009 <a href="http://celamanzi.ning.com/">Cel'Amanzi</a><br />
+2009-2010 <a href="http://www.youleaf.com/">YouLeaf</a><br />
+</p> -->
+
+
+
+    </div>
+</div>
+<footer id="footer" role="footer">
+  <span>Rails-portlet is open source, under the MIT license.</span>
+</footer>
+
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-6728200-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+
+  </body>
+</html>
+
