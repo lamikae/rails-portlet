@@ -4,6 +4,7 @@ background: none repeat scroll 0 0 #EEF0F2;
 background-image: -webkit-gradient(linear, left top, left bottom, from(#eef0f2), to(#ffffff));
 background-image: -moz-linear-gradient(top left, #eef0f2, #ffffff);
 background-image: -o-linear-gradient(top left, #eef0f2, #ffffff);
+font-family: 'Baskerville', Georgia, Times, serif;
 }
 #banner {
 color: black;
@@ -21,7 +22,7 @@ float: left;
 
 #title {
 margin: 80px 0 0 240px;
-font-family: georgia, DejaVu, Times;
+font-family: 'Baskerville', Georgia, DejaVu, Times;
 font-size: 2.2em;
 color: #000;
 text-shadow: #ccc 2px 2px 3px;
@@ -42,7 +43,7 @@ border: 0px solid purple;
 background: rgba(255,255,255,0.5);
 position: relative;
 overflow: visible;
-padding: 0.4em;
+padding: 0 0 0.4em 0;
 margin: 0;
 height: auto;
 }
@@ -74,15 +75,15 @@ display: inline-block;
 vertical-align: top;
 padding: 0.3em 0.8em 0.4em;
 margin: 0.1em 0.2em 0;
-text-shadow: 2px 2px 2px #000;
-font-family: Arial,Helvetica,Verdana,sans-serif;
 -webkit-border-radius: 2px;
 -moz-border-radius: 2px;
 border-radius: 2px;
 }
 #navigation a {
-font-size: 1.1em;
+font-size: 1.2em;
 color: #ffffff;
+text-shadow: 2px 2px 2px #000;
+font-family: Georgia, DejaVu, Times;
 text-decoration: none;
 }
 #navigation a:hover {
@@ -105,19 +106,26 @@ padding: 5px 0 0 0;
 }
 
 h1 {
-margin: 0;
-padding: 0;
 font-size: 1.4em;
+font-weight: 600;
+background: #eee;
+background: -webkit-gradient(linear, left top, left bottom, from(rgba(200,200,200, 0.2)), to(rgba(0,0,0,0)));
+background: -moz-linear-gradient(top , rgba(200,200,200,0.2), rgba(0,0,0,0));
+background: -o-linear-gradient(top , rgba(200,200,200,0.2), rgba(0,0,0,0));
+margin: 0 0 1em;
+padding: 0.3em;
 }
 
 h2 {
 font-size: 1.2em;
 padding: 0;
 margin: 0.3em;
+font-weight: 420;
 }
 
 p {
-padding: 2px;
+margin: 1em;
+/*padding: 2px;*/
 float: none;
 }
 
